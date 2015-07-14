@@ -1,13 +1,4 @@
 package com.env.activity;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -29,18 +20,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -48,14 +36,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.env.bean.EP_NFCCard;
 import com.env.bean.EP_User;
 import com.env.component.DataService;
@@ -72,9 +58,20 @@ import com.env.utils.SystemMethodUtil;
 import com.env.utils.SystemParamsUtil;
 import com.env.utils.ViewUtil;
 import com.env.widget.MenuPopupWindow;
+import com.zxing.activity.CaptureActivity;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * 巡检系统登录后的界面，展示构筑物以及构筑物下面的巡检卡
+ * 巡检系统登录后的界面，展示泵房以及泵房下面的巡检卡
  * @author sk
  */
 @SuppressLint("InflateParams")
@@ -106,7 +103,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	private SQLiteDatabase db =null;
 	private ArrayList<HashMap<String, String>>plantInfos,cards;
 	private Intent Cards2Task,Card2Tag,dataService;
-    private ProgressDialog updateProgressDialog,logoutProgressDialog;
+    private ProgressDialog logoutProgressDialog;
     private AlertDialog.Builder cardDialog,cardBuilder;
     private HashMap<String, String> child ;
     private Timer refreshUI = null,checkData = null,upload = null;
@@ -121,7 +118,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
     private LogoutThread thread;
     private ProgressDialog localDataDialog;
     private EP_User loginUser;
-    private boolean isTimerRun=true,showAllCard=true,dialogShow=false,getLocalDateIng=false,isNewIntent=false;
+    private boolean isTimerRun=true,dialogShow=false,getLocalDateIng=false,isNewIntent=false;
     private ServiceConnection connection = new ServiceConnection() {
 		
 		@Override
@@ -135,10 +132,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	};
     private Handler refreshUIHandler = new Handler(){
     	public void handleMessage(Message msg) {
-    		if(updateProgressDialog!=null&&updateProgressDialog.isShowing()){
-    			updateProgressDialog.cancel();
-    		}
-    		switch (msg.what) {    		
+    		switch (msg.what) {
 			case RefreshUITimer:
 				consAdapter.notifyDataSetChanged();
 				isTimerRun = false;
@@ -304,14 +298,12 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
 	private void updateDate() {
 		isTimerRun =true;
-//		setData();
-//		consAdapter.notifyDataSetChanged();		
 		if(refreshUI == null){
 			refreshUI = new Timer();
 			refreshUI.schedule(new TimerTask() {				
@@ -432,6 +424,15 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		ExitDialog(ActivityTaskConstruction.this).show();
 	}
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK && requestCode==1) {
+			Bundle bundle = data.getExtras();
+			String scanResult = bundle.getString("result");
+			Toast.makeText(this,scanResult,Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	/**
 	 * 退出程序
 	 * @param context
@@ -485,6 +486,11 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			card.put("NeedRemind", (counts[0]-counts[1])+"");
 
 		}
+	}
+
+	private void goToQrCodeActivity(){
+		Intent intent = new Intent(ActivityTaskConstruction.this, CaptureActivity.class);
+		startActivityForResult(intent,1);
 	}
 	
 	
@@ -608,32 +614,9 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		}, 0, 2000);
 	}
 
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if(keyCode==KeyEvent.KEYCODE_MENU){
-//			if(popupMenu == null){
-//				popupMenu = new MenuPopupWindow(PatrolTaskConstruction.this);
-//			}
-//			if(!popupMenu.isShowing()){
-//				popupMenu.showAtLocation(findViewById(R.id.menu_popwind_main), Gravity.BOTTOM, 0,0);
-//			}else{
-//				popupMenu.dismiss();
-//			}			
-//			return true;
-//		}else{
-//			return super.onKeyDown(keyCode, event);
-//		}
-//	}
-
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		popupMenu = new MenuPopupWindow(PatrolTaskConstruction.this);	
 		menu.add("menu");
-//		menu.add(0, 0, 0, "数据更新").setIcon(R.drawable.menu_download);
-//		menu.add(0, 1, 1, "数据上传").setIcon(R.drawable.menu_upload);
-//		menu.add(0, 2, 2,"设置").setIcon(R.drawable.menu_setting);
-//		menu.add(0, 3, 3, "注销").setIcon(R.drawable.menu_logout);
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
@@ -736,17 +719,56 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		optionsMenu = new PopupMenu(ActivityTaskConstruction.this, titleOptions);
 		optionsMenu.inflate(R.menu.patroltaskconstruction_popupmenu);
 		optionsMenu.setOnMenuItemClickListener(this);
-		optionsMenu.getMenu().getItem(2).setVisible(false);
-		optionsMenu.getMenu().getItem(3).setVisible(false);
 //		if(showAllCard){
 //			optionsMenu.getMenu().getItem(3).setTitle(R.string.construction_menu_showdata);
 //		}else {
 //			optionsMenu.getMenu().getItem(3).setTitle(R.string.construction_menu_showall);
 //		}
-		optionsMenu.getMenu().getItem(3).setChecked(showAllCard);
+//		optionsMenu.getMenu().getItem(3).setChecked(showAllCard);
 		optionsMenu.show();
 	}
-	
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		switch (item.getOrder()) {
+			case 0:
+				checkUpdate();
+				break;
+			case 1:
+				uploadData();
+				break;
+			case 2:
+//				showCard();
+//				去二维码扫码界面
+				goToQrCodeActivity();
+				break;
+			case 3:
+//			if(showAllCard){
+//				showAllCard = false;
+//			}else {
+//				showAllCard = true;
+//			}
+//			if(sp==null){
+//				sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
+//			}
+//			if(editor==null){
+//				editor = sp.edit();
+//			}
+//			editor.putBoolean(PatrolApplication.CONS_CARD_INFLATEER, showAllCard);
+//			editor.commit();
+//			getLocalData();
+				break;
+			case 4:
+				Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
+				startActivity(config);
+				break;
+			case 5:
+				logout();
+				break;
+		}
+		return true;
+	}
+
 	/**
 	 * 通过查找卡号进入任务界面
 	 */
@@ -824,23 +846,30 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			int count = 0;
 			String plantId = plantInfos.get(groupPosition).get("PlantID");
 			for(HashMap<String, String> card : cards){
-				if(showAllCard){
-					if(card.get("PlantID").equals(plantId)){
-						if(count == childPosition){
-							map = card;
-							break;
-						}
-						count++;
+				if(card.get("PlantID").equals(plantId)){
+					if(count == childPosition){
+						map = card;
+						break;
 					}
-				}else {
-					if(card.get("PlantID").equals(plantId)&&!card.get("MountCount").equals("0")){
-						if(count == childPosition){
-							map = card;
-							break;
-						}
-						count++;
-					}
+					count++;
 				}
+//				if(showAllCard){
+//					if(card.get("PlantID").equals(plantId)){
+//						if(count == childPosition){
+//							map = card;
+//							break;
+//						}
+//						count++;
+//					}
+//				}else {
+//					if(card.get("PlantID").equals(plantId)&&!card.get("MountCount").equals("0")){
+//						if(count == childPosition){
+//							map = card;
+//							break;
+//						}
+//						count++;
+//					}
+//				}
 			}
 			return map;
 		}
@@ -972,44 +1001,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		
 	}
 	
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		switch (item.getOrder()) {
-		case 2:
-			showCard();
-			break;
-		case 5:
-			logout();
-			break;
-		case 4:
-			Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
-			startActivity(config);
-			break;
-		case 0:
-			checkUpdate();
-			break;
-		case 1:
-			uploadData();
-			break;
-		case 3:
-//			if(showAllCard){
-//				showAllCard = false;
-//			}else {
-//				showAllCard = true;
-//			}
-//			if(sp==null){
-//				sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
-//			}
-//			if(editor==null){
-//				editor = sp.edit(); 
-//			}
-//			editor.putBoolean(PatrolApplication.CONS_CARD_INFLATEER, showAllCard);
-//			editor.commit();
-//			getLocalData();
-			break;
-		}
-		return true;
-	}	
+
 	
 	/**
 	 * 从服务器上拉去数据
@@ -1059,74 +1051,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		}, 0, 2000);
 	}
 
-	/**
-	 * 点击menu按钮弹出自定义的menu框
-	 * @author sk
-	 */
-//	public class MenuPopupWindow extends PopupWindow implements OnClickListener{
-//		private Context mContext;
-//		private View view;
-//		private TextView dowunLoad,upload,logout,settings;
-//		public MenuPopupWindow(Context context){
-//			super(context);
-//			mContext = context;
-//			view = LayoutInflater.from(mContext).inflate(R.layout.menu_popupwind, null);
-//			ini();
-//
-//		}
-//		public MenuPopupWindow(Context context,AttributeSet attr){
-//			super(context, attr);
-//		}
-//
-//		private void ini(){
-//			setWidth(LayoutParams.WRAP_CONTENT);
-//			setHeight(LayoutParams.WRAP_CONTENT);
-//			setAnimationStyle(R.style.popupwindow_anim);
-//			dowunLoad = (TextView)view.findViewById(R.id.menu_popwind_download);
-//			upload = (TextView)view.findViewById(R.id.menu_popwind_upload);
-//			settings = (TextView)view.findViewById(R.id.menu_popwind_setting);
-//			logout = (TextView)view.findViewById(R.id.menu_popwind_logout);
-//			dowunLoad.setOnClickListener(this);
-//			upload.setOnClickListener(this);
-//			settings.setOnClickListener(this);
-//			logout.setOnClickListener(this);
-//			setBackgroundDrawable(getResources().getDrawable(R.drawable.menu_popupwind_bg));
-//			setOutsideTouchable(true);
-//			setFocusable(true);
-//			view.setFocusableInTouchMode(true);
-//			view.setOnKeyListener(new OnKeyListener() {
-//				@Override
-//				public boolean onKey(View v, int keyCode, KeyEvent event) {
-//					if ((keyCode == KeyEvent.KEYCODE_MENU)&&(isShowing())) {
-//		                dismiss();// 这里写明模拟menu的PopupWindow退出就行
-//		                return true;
-//		            }
-//		            return false;
-//				}
-//			});
-//			setContentView(view);
-//		}
-//
-//		@Override
-//		public void onClick(View v) {
-//			int id = v.getId();
-//			if (id == R.id.menu_popwind_download) {
-//				popupMenu.dismiss();
-//				checkUpdate();
-//			} else if (id == R.id.menu_popwind_upload) {
-//				popupMenu.dismiss();
-//				uploadData();
-//			} else if (id == R.id.menu_popwind_logout) {
-//				popupMenu.dismiss();
-//				logout();
-//			} else if (id == R.id.menu_popwind_setting) {
-//				popupMenu.dismiss();
-//				Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
-//				startActivity(config);
-//			}
-//		}
-//	}
-	
+
 	/**
 	 * 弹出加载数据的等待框
 	 */
@@ -1140,8 +1065,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		localDataDialog.show();
 	}
 	
-	
-	
+
 	/**
 	 * 其他情况时（非oncreate事件中）使用的加载本地数据的事件的异步类
 	 * @author sk

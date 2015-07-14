@@ -1,14 +1,12 @@
 # Gradle files
-build/
 
-
-settings.gradle
 
 # IDEA
 
 
 # Built application files
-
+build/
+/EnvEasyPatrol.iml
 
 
 # Files for the Dalvik VM
