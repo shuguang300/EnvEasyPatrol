@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/patroltasknfccard_menu_showtag" android:title="@string/tasknfccard_menu_showtag"/>
+	<item android:id="@+id/patroltasknfccard_menu_upload" android:title="@string/tasknfccard_menu_upload"/>
+	<item android:id="@+id/patroltasknfccard_menu_showtime" android:title="@string/tasknfccard_menu_showtime"/>
+</menu>

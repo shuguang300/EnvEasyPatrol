@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:focusable="true"
+   	android:focusableInTouchMode="true" >
+
+
+
+    <EditText
+        android:id="@+id/tv_username"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/xxx_large"
+        android:layout_marginTop="80dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="1dp"
+        android:background="@drawable/longin_text_bg"
+        android:drawableRight="@drawable/login_user"
+        android:gravity="center_vertical"
+        android:hint="@string/login_hint_username"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/normal" />
+
+    <EditText
+        android:id="@+id/tv_userpsw"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/xxx_large"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/longin_text_bg"
+        android:drawableRight="@drawable/login_psw"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:hint="@string/login_hint_userpsw"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="textPassword"
+        android:textSize="@dimen/normal" />
+	
+    
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/xxx_large"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_style_white1"
+        android:text="@string/login_login"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/normal" />
+
+</LinearLayout>

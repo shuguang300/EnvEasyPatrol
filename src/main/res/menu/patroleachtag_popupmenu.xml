@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/taskeachtag_menu_all" android:title="@string/taskeachtag_menu_all" android:checkable="true"/>
+    <item android:id="@+id/taskeachtag_menu_done" android:title="@string/taskeachtag_menu_done" android:checkable="true"/>
+    <item android:id="@+id/taskeachtag_menu_undo" android:title="@string/taskeachtag_menu_undo" android:checkable="true"/>
+    <item android:id="@+id/taskeachtag_menu_unupload" android:title="@string/taskeachtag_menu_unupload" android:checkable="true"/>
+</menu>

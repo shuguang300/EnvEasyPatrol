@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        style="@style/action_bar" >
+
+        <TextView
+            android:id="@+id/eachtag_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small"
+            android:text="@string/btn_title_back"
+            android:gravity="center"
+            android:background="@drawable/title_back_bg" />
+
+        <TextView
+            android:id="@+id/eachtag_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small"
+            android:text="@string/btn_title_cons_function"
+            android:gravity="center"
+            android:background="@drawable/title_options_bg" />
+        
+        
+        <TextView
+            android:id="@+id/eachtag_tagname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/eachtag_back"
+            android:layout_toLeftOf="@id/eachtag_options"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="@dimen/large"
+            android:gravity="center"
+            android:singleLine="false"
+            android:minLines="1" />
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:background="@color/deepgray"
+        android:padding="10dp" >
+
+        <LinearLayout
+            android:id="@+id/eachtag_timegroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/calendar"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp"
+                android:background="@drawable/single_click_middle_stroke"
+                android:textSize="@dimen/normal" />
+
+            <TextView
+                android:id="@+id/tv_stop_date"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:drawableLeft="@drawable/calendar"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp"
+                android:background="@drawable/single_click_middle_stroke"
+                android:textSize="@dimen/normal" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/eachtag_search"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/eachtag_timegroup"
+            android:background="@drawable/btn_style_blue1"
+            android:text="@string/eachtag_btn_search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+        
+        <TextView 
+            android:id="@+id/eachcard_planinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal"
+            android:layout_below="@id/eachtag_search"
+            android:singleLine="false"
+            android:minLines="1"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/eachtag_tasklistview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>

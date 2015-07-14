@@ -1,0 +1,53 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    
+    <style name="taskpage_panel">
+        <item name="android:background">@drawable/taskpage_panel</item>
+    </style>
+
+    <style name="taskpage_panel_head">
+        <item name="android:background">@color/lightblue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/large</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15dp</item>
+    </style>
+    
+    <style name="taskpage_panel_title">
+    	<item name="android:background">@drawable/taskpage_panel_title</item>
+    	<item name="android:textColor">@color/white</item>   
+    	<item name="android:paddingLeft">5dp</item> 
+    	<item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="action_bar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/xxx_large</item>
+        <item name="android:background">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="popupwindow_anim" parent="android:Animation">
+       	<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+   	<style name="config_options_divide">
+   	    <item name="android:background">@color/gray</item>
+   	    <item name="android:height">2dp</item>
+   	</style>
+   	<style name="DialogActivity" parent="@android:style/Theme.Dialog">
+   	    <item name="android:windowFrame">@null</item><!-- 边框 -->  
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->  
+        <item name="android:windowIsTranslucent">false</item> 半透明 -->  
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->  
+        <item name="android:backgroundDimEnabled">false</item><!-- 模糊 --> 
+    </style>
+   	<style name="PlanInfoDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+   	    <item name="android:windowFrame">@null</item><!-- 边框 -->  
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->  
+        <item name="android:windowIsTranslucent">false</item> 半透明 -->  
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->  
+        <item name="android:backgroundDimEnabled">false</item><!-- 模糊 --> 
+        <item name="android:windowBackground">@color/white</item><!-- 模糊 --> 
+    </style>
+</resources>

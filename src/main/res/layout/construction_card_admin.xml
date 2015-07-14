@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_popwind_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout style="@style/action_bar" >
+
+        <TextView
+            android:id="@+id/user_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/title_back_bg"
+            android:gravity="center"
+            android:text="@string/btn_title_logout"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small" />
+
+        <TextView
+            android:id="@+id/user_admin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+
+        <TextView
+            android:id="@+id/construction_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/title_options_bg"
+            android:gravity="center"
+            android:text="@string/btn_title_cons_function"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small" />
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#DEDEDE"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:columnCount="1"
+        android:rowCount="2" >
+
+        <Button
+            android:id="@+id/admin_btn_data"
+            android:layout_gravity="fill_horizontal"
+            android:text="@string/admin_tv_data" />
+
+        <Button
+            android:id="@+id/admin_btn_config"
+            android:layout_gravity="fill_horizontal"
+            android:text="@string/admin_tv_config" />
+    </GridLayout>
+
+</LinearLayout>

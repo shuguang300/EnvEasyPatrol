@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+
+    <RelativeLayout
+        style="@style/action_bar" >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/application_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+        
+        <TextView
+            android:id="@+id/application_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small"
+            android:text="@string/btn_title_refresh"
+            android:gravity="center"
+            android:background="@drawable/title_options_bg" />
+        
+    </RelativeLayout>
+    
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical" >
+
+                <ProgressBar
+                    android:id="@+id/application_state"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:progressDrawable="@drawable/progressbar_horizontal_applicationstate" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/application_state1"
+                        android:textSize="@dimen/small" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/application_state2"
+                        android:textSize="@dimen/small" />
+
+                    <TextView
+                        android:id="@+id/application_state3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center_vertical"
+                        android:text="@string/application_state3"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/single_click_allcorner"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_name"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_name"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/application_verify_need"
+                        android:inputType="text"
+                        android:textSize="@dimen/small" >
+                    </EditText>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_phone"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_phone"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/application_verify_need"
+                        android:inputType="phone"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_company"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_company"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/application_verify_need"
+                        android:inputType="textMultiLine"
+                        android:singleLine="false"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_duty"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_duty"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/application_verify_noneed"
+                        android:inputType="textMultiLine"
+                        android:singleLine="false"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_description"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_description"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/application_verify_noneed"
+                        android:inputType="textMultiLine"
+                        android:singleLine="false"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/application_auditinformation"
+                        android:textSize="@dimen/small" />
+
+                    <EditText
+                        android:id="@+id/application_auditinformation"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:singleLine="false"
+                        android:enabled="false"
+                        android:textSize="@dimen/small" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                
+                <Button
+                     android:id="@+id/application_submit"
+                    android:layout_margin="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/xx_large"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_style_green"
+                    android:text="@string/application_submit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normal" />
+
+                <Button
+                    android:id="@+id/application_reset"
+                    android:layout_margin="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/xx_large"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_style_red"
+                    android:text="@string/application_reset"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/normal" />
+
+            </LinearLayout>
+        </LinearLayout>
+        
+    </ScrollView>
+    
+</LinearLayout>

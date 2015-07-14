@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="CommitPrefEdits" severity="ignore" />
+    <issue id="DefaultLocale" severity="ignore" />
+    <issue id="HandlerLeak" severity="ignore" />
+    <issue id="InflateParams" severity="ignore" />
+    <issue id="Registered" severity="ignore" />
+    <issue id="SdCardPath" severity="ignore" />
+    <issue id="SimpleDateFormat" severity="ignore">
+        <ignore path="src/com/env/utils/CommonMethod.java" />
+    </issue>
+    <issue id="UseSparseArrays" severity="ignore" />
+</lint>

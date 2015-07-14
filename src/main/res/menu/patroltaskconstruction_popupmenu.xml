@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:title="@string/construction_menu_update" android:orderInCategory="0" android:showAsAction="always|withText" android:icon="@drawable/login_psw"/>
+	<item android:title="@string/construction_menu_upload" android:orderInCategory="1"/>
+	<item android:title="@string/construction_menu_findcard" android:orderInCategory="2"/>
+	<item android:title="@string/construction_menu_showall" android:checkable="true" android:orderInCategory="3"/>
+	<item android:title="@string/construction_menu_setting" android:orderInCategory="4"/>
+	<item android:title="@string/construction_menu_logout" android:orderInCategory="5"/>
+	
+</menu>

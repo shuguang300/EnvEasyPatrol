@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/menu_popupwind_bg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/menu_popwind_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:drawableTop="@drawable/menu_download"
+        android:gravity="center"
+        android:text="@string/construction_menu_update" />
+
+    <TextView
+        android:id="@+id/menu_popwind_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:drawableTop="@drawable/menu_upload"
+        android:gravity="center"
+        android:text="@string/construction_menu_upload" />
+
+
+
+    <TextView
+        android:id="@+id/menu_popwind_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:drawableTop="@drawable/menu_setting"
+        android:gravity="center"
+        android:text="@string/construction_menu_setting" />
+
+
+
+    <TextView
+        android:id="@+id/menu_popwind_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:drawableTop="@drawable/menu_logout"
+        android:gravity="center"
+        android:text="@string/construction_menu_logout" />
+
+</LinearLayout>

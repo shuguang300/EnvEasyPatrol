@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        style="@style/action_bar">
+
+        <TextView
+            android:id="@+id/regcard_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small"
+            android:text="@string/btn_title_back"
+            android:gravity="center"
+            android:background="@drawable/title_back_bg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/registercard_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/single_click_allcorner" >
+
+                <RelativeLayout
+                    android:id="@+id/regcard_layout_cardid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_top" >
+
+                    <TextView
+                        android:id="@+id/regcard_title_cardid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:drawableLeft="@drawable/regcard_tagid"
+                        android:gravity="center"
+                        android:hint="@string/registercard_title_cardid"
+                        android:textSize="@dimen/large" />
+
+                    <TextView
+                        android:id="@+id/regcard_value_cardid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/regcard_title_cardid"
+                        android:gravity="center"
+                        android:textSize="@dimen/large" />
+
+                    <CheckBox
+                        android:id="@+id/regcard_cb_verify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/checkbox_bg"
+                        android:button="@null"
+                        android:clickable="false"
+                        android:enabled="false" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/regcard_layout_plantname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:id="@+id/regcard_title_plantname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:drawableLeft="@drawable/regcard_plantname"
+                        android:gravity="center"
+                        android:hint="@string/registercard_title_plantname"
+                        android:textSize="@dimen/large" />
+
+                    <Spinner
+                        android:id="@+id/regcard_spinner_plantname"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_toRightOf="@id/regcard_title_plantname"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dropdown_bg"
+                        android:spinnerMode="dropdown" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/regcard_layout_cardtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:id="@+id/regcard_title_cardtype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:drawableLeft="@drawable/regcard_cardtype"
+                        android:gravity="center"
+                        android:hint="@string/registercard_title_cardtype"
+                        android:textSize="@dimen/large" />
+
+                    <Spinner
+                        android:id="@+id/regcard_spinner_cardtype"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_toRightOf="@id/regcard_title_cardtype"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dropdown_bg"
+                        android:spinnerMode="dropdown" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/regcard_layout_userlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_bottom" >
+
+
+                    <TextView
+                        android:id="@+id/regcard_title_userlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:drawableLeft="@drawable/regcard_user"
+                        android:gravity="center"
+                        android:hint="@string/registercard_title_userlist"
+                        android:textSize="@dimen/large" />
+
+                    <Spinner
+                        android:id="@+id/regcard_spinner_userlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/dropdown_bg"
+                        android:layout_toRightOf="@id/regcard_title_userlist"
+                        android:spinnerMode="dropdown" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/regcard_layout_tagcardgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/regcard_layout_cardname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/single_click_middle" 
+                        android:focusable="true"
+                    	android:focusableInTouchMode="true">
+			
+                        <TextView
+                            android:id="@+id/regcard_title_cardname"
+                            android:layout_width="wrap_content"
+                        	android:layout_height="wrap_content"
+                        	android:layout_centerVertical="true"
+                        	android:layout_alignParentLeft="true"
+                        	android:layout_margin="5dp"
+                        	android:drawableLeft="@drawable/regcard_cardname"
+                            android:gravity="center"
+                            android:hint="@string/registercard_title_cardname"
+                            android:textSize="@dimen/large" />
+
+                        <EditText
+                            android:id="@+id/regcard_value_cardname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/regcard_title_cardname"
+                            android:background="@drawable/dropdown_bg"
+                            android:gravity="center_vertical"
+                            android:hint="@string/registercard_title_cardname"
+                            android:inputType="text"
+                            android:maxEms="10"
+                            android:textSize="@dimen/large" />
+                    </RelativeLayout>
+
+                    <TextView
+                        style="@style/config_options_divide"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <RelativeLayout
+                        android:id="@+id/regcard_layout_cardconstruction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/single_click_middle" >
+
+
+                        <TextView
+                            android:id="@+id/regcard_title_cardconstruction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dp"
+                            android:drawableLeft="@drawable/regcard_construction"
+                            android:gravity="center"
+                            android:hint="@string/registercard_title_construction"
+                            android:textSize="@dimen/large" />
+
+                        <Spinner
+                            android:id="@+id/regcard_spinner_cardconstruction"
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_centerVertical="true"
+                        	android:background="@drawable/dropdown_bg"
+                            android:layout_toRightOf="@id/regcard_title_cardconstruction"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown" />
+                    </RelativeLayout>
+
+                    <TextView
+                        style="@style/config_options_divide"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <RelativeLayout
+                        android:id="@+id/regcard_layout_cardinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/single_click_bottom"
+                        android:focusable="true"
+                    	android:focusableInTouchMode="true" >
+
+
+                        <TextView
+                            android:id="@+id/regcard_title_cardinfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dp"
+                            android:drawableLeft="@drawable/regcard_cardinfo"
+                            android:gravity="center"
+                            android:hint="@string/registercard_title_cardinfo"
+                            android:textSize="@dimen/large" />
+
+                        <EditText
+                            android:id="@+id/regcard_value_cardinfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/dropdown_bg"
+                            android:layout_toRightOf="@id/regcard_title_cardinfo"
+                            android:hint="@string/registercard_title_cardinfo"
+                            android:inputType="textMultiLine"
+                            android:maxEms="50"
+                            android:singleLine="false"
+                            android:textSize="@dimen/large" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/regcard_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/xxx_large"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_style_red1"
+                android:text="@string/registercard_btn_submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/normal" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

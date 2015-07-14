@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/data_input_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/data_input_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/task_type_data" />
+
+    <LinearLayout
+        android:id="@+id/data_input_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/data_input_logo"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/data_input_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small" />
+
+        <TextView
+            android:id="@+id/data_input_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lightgray"
+            android:textSize="@dimen/x_small"
+            android:singleLine="false"
+            android:minLines="1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/data_input_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="#595959"
+        android:textSize="@dimen/small" />
+
+    <TextView
+        android:id="@+id/data_input_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/data_input_unit"
+        android:textColor="#000000"
+        android:textSize="@dimen/normal" />
+
+</RelativeLayout>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        style="@style/action_bar" >
+        
+        <TextView
+            android:id="@+id/config_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small"
+            android:text="@string/btn_title_back"
+            android:gravity="center"
+            android:background="@drawable/title_back_bg" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/config_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+        
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/single_click_allcorner" >
+
+                <!-- <RelativeLayout
+                    android:id="@+id/config_title_remname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_top" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_remuser"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_remname"
+                        android:textSize="@dimen/large" />
+
+                    <CheckBox
+                        android:id="@+id/config_cb_remname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/checkbox_bg"
+                        android:button="@null" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" /> -->
+
+                <!-- <RelativeLayout
+                    android:id="@+id/config_title_autologin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_autologin"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_autologin"
+                        android:textSize="@dimen/large" />
+
+                    <CheckBox
+                        android:id="@+id/config_cb_autologin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/checkbox_bg"
+                        android:button="@null" />
+                </RelativeLayout> -->
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                
+                <RelativeLayout
+                    android:id="@+id/config_title_autoupdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_updatemode"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_autoupdate"
+                        android:textSize="@dimen/large" />
+
+                    <CheckBox
+                        android:id="@+id/config_cb_datamode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/checkbox_bg"
+                        android:button="@null" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                
+                <RelativeLayout
+                    android:id="@+id/config_title_hastips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_hastips"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_hastips"
+                        android:textSize="@dimen/large" />
+
+                    <CheckBox
+                        android:id="@+id/config_cb_hastips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/checkbox_bg"
+                        android:button="@null" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <RelativeLayout
+                    android:id="@+id/config_title_appversion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <ImageView
+                        android:id="@+id/config_img_appversion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentLeft="true"
+                        android:background="@drawable/config_img_version" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/config_img_appversion"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="-5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_appversion"
+                        android:textSize="@dimen/large" />
+
+                    <TextView
+                        android:id="@+id/config_arrow_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/config_options_arrow" />
+
+                    <TextView
+                        android:id="@+id/config_value_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@id/config_arrow_version"
+                        android:textSize="@dimen/large" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/config_title_ipaddr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_ip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_ipaddr"
+                        android:textSize="@dimen/large" />
+
+                    <TextView
+                        android:id="@+id/config_arrow_ipaddr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/config_options_arrow" />
+                  
+                </RelativeLayout>
+                
+                <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/config_title_uploadlog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_middle" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_uploadlog"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_uploadlog"
+                        android:textSize="@dimen/large" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/config_options_arrow" />
+                  
+                </RelativeLayout>
+
+                <!-- <TextView
+                    style="@style/config_options_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/config_title_backupdata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/single_click_bottom" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/config_img_backupdata"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="@string/config_options_backupdata"
+                        android:textSize="@dimen/large" />
+
+                    <TextView
+                        android:id="@+id/config_arrow_backupdata"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/config_options_arrow" />
+                </RelativeLayout> -->
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/config_btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/xxx_large"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_style_red1"
+                android:text="@string/config_options_logout"
+                android:textColor="@color/white"
+                android:textSize="@dimen/normal" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

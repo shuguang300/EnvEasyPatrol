@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system"></string>
+    <string name="system_appname">二次供水巡检</string>
+    <string name="system_sdcard_failed">未检测到SD卡，拍照和录音任务将暂时无法执行,无法进行软件更新和数据备份</string>
+    <string name="system_dataexchange_tips_notips">下次不再提醒</string>
+    <string name="system_dataexchange_tips_message">您现在使用的是运营商网络，继续操作可能会被运营商收取流量费用，是否继续？</string>
+    
+    <string name="save">保存</string>
+    <string name="back">返回</string>
+    
+    
+    <string name="login_xml"></string>
+    <string name="login_hint_username">登录名</string>
+    <string name="login_hint_userpsw">密码</string>
+    <string name="login_login">登    录</string>
+    <string name="login_remname">记住用户名</string>
+    <string name="login_autologin">自动登录</string>
+    <string name="login_menu_update">数据更新</string>
+    <string name="login_menu_ipaddr">服务器地址</string>
+    
+    <string name="welcome"></string>
+    <string name="welcome_six_btnstart">开始</string>
+    
+    <string name="btn_title"></string>
+    <string name="btn_title_card_function">菜单</string>
+    <string name="btn_title_cons_function">菜单</string>
+    <string name="btn_title_back">返回</string>
+    <string name="btn_title_refresh">刷新</string>
+    <string name="btn_title_logout">注销</string>
+    <string name="btn_title_cancel">取消</string>
+    <string name="btn_title_save">保存</string>
+    
+    <string name="eachtag_xml"></string>
+    <string name="eachtag_btn_search">查        询</string>
+    
+    <string name="toast"></string>
+	<string name="toast_must">该项目必须刷卡，请刷卡</string>    
+    
+	<string name="plantinfo_dialog_title">计划详细信息</string>
+    
+    <string name="construction_menu"></string>
+    <string name="construction_menu_upload">数据上传</string>
+    <string name="construction_menu_update">数据更新</string>
+    <string name="construction_menu_setting">设置</string>
+    <string name="construction_menu_logout">注销</string>
+    <string name="construction_menu_findcard">查找卡片</string>
+    <string name="construction_menu_showall">显示所有</string>
+    <string name="construction_menu_showdata">显示当前</string>
+    
+    <string name="tasknfccard_menu"></string>
+    <string name="tasknfccard_menu_save">保存</string>
+    <string name="tasknfccard_menu_upload">快速上传</string>
+    <string name="tasknfccard_menu_showtag">查看巡检项</string>
+    <string name="tasknfccard_menu_showtime">显示任务时间</string>
+    <string name="tasknfccard_menu_notime">不显示任务时间</string>
+    
+    <string name="taskeachtag_menu"></string>
+    <string name="taskeachtag_menu_all">所有任务</string>
+    <string name="taskeachtag_menu_done">已完成</string>
+    <string name="taskeachtag_menu_undo">未完成</string>
+    <string name="taskeachtag_menu_unupload">未上传</string>
+    
+    <string name="application_xml"></string>
+    <string name="application_title">提交申请</string>
+    <string name="application_state1">提交申请</string>
+    <string name="application_state2">人工审核</string>
+    <string name="application_state3">审核通过</string>
+    <string name="application_state4">审核失败</string>
+    <string name="application_name">申请人姓名:</string>
+    <string name="application_phone">申请人电话:</string>
+    <string name="application_company">申请人单位:</string>
+    <string name="application_description">申请说明:</string>
+    <string name="application_duty">申请人职务:</string>
+    <string name="application_submit">提交申请</string>
+    <string name="application_reset">重置信息</string>
+    <string name="application_auditinformation">审核信息</string>
+    <string name="application_verify_need">必填</string>
+    <string name="application_verify_noneed">选填</string>
+    
+    <string name="config_xml"></string>
+    <string name="config_title">系统设置</string>
+    <string name="config_options_remname">记住用户名</string>
+    <string name="config_options_autologin">自动登录</string>
+    <string name="config_options_autoupdate">仅wifi下自动更新任务</string>
+    <string name="config_options_hastips">2G/3G更新任务提醒</string>
+    <string name="config_options_appversion">软件版本</string>
+    <string name="config_options_ipaddr">服务器地址</string>
+    <string name="config_options_uploadlog">上传错误日志</string>
+    <string name="config_options_logout">注销当前用户</string>
+    <string name="config_options_registercard">NFC卡管理</string>
+    <string name="config_options_backupdata">数据备份</string>
+
+    
+    <string name="updatesystem_xml"></string>
+    <string name="updatesystem_title">系统消息</string>
+    <string name="updatesystem_vername">版本信息</string>
+    <string name="updatesystem_updateinfo">更新内容</string>
+    <string name="updatesystem_ok">更新</string>
+    <string name="updatesystem_cancel">取消</string>
+    
+    
+    <string name="registercard_xml"></string>
+    <string name="registercard_title">NFC卡管理</string>
+    <string name="registercard_btn_submit">提交</string>
+    <string name="registercard_btn_verify">验证</string>
+    <string name="registercard_title_cardid">NFC卡编码:</string>
+    <string name="registercard_title_plantname">污水厂名称:</string>
+    <string name="registercard_title_cardtype">NFC卡类型:</string>
+    <string name="registercard_title_userlist">巡检员列表:</string>
+    <string name="registercard_title_cardname">NFC卡名称:</string>
+    <string name="registercard_title_construction">所属构筑物:</string>
+    <string name="registercard_title_cardinfo">新卡片信息:</string>
+    
+    
+    <string name="admin_xml"></string>
+    <string name="admin_tv_config">配置管理</string>
+    <string name="admin_tv_data">数据管理</string>
+    <string name="admin_tv_tag">巡检项信息</string>
+    <string name="admin_tv_plan">巡检计划信息</string>
+
+    <string name="adminconfig_option_user">用户管理</string>
+    <string name="adminconfig_option_group">班组管理</string>
+    <string name="adminconfig_option_construction">构筑物管理</string>
+    <string name="adminconfig_option_card">NFC卡管理</string>
+    <string name="adminconfig_option_tag">巡检项管理</string>
+    <string name="adminconfig_option_plan">计划管理</string>
+    
+    <string name="admindata_historydata">巡检历史记录</string>
+    <string name="admindata_tagdata">巡检数据查看</string>
+    <string name="admindata_tagstat">巡检项完成率</string>
+    <string name="admindata_planstat">计划完成率</string>
+    
+</resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="#50ffffff" >
+    
+    <TextView
+        android:id="@+id/updatesystem_title" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/large"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/login_logo"
+        android:gravity="center_vertical"
+        android:text="@string/updatesystem_title"/>
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/content_divider"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        
+        <TextView
+        	android:layout_alignParentLeft="true"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="@dimen/normal"
+        	android:text="@string/updatesystem_vername"/>
+        <TextView
+        	android:id="@+id/updatesystem_vername" 
+        	android:layout_alignParentRight="true"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="@dimen/normal"/>
+        
+        
+    </RelativeLayout>
+    
+    <RelativeLayout        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+        <TextView
+            android:id="@+id/updatesystem_title_updateinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/updatesystem_updateinfo"
+            android:textSize="@dimen/normal" />
+        <TextView
+            android:id="@+id/updatesystem_updateinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/updatesystem_title_updateinfo"
+            android:layout_marginLeft="20dp"
+            android:textSize="@dimen/normal"
+            android:minLines="2"
+            android:singleLine="false" />
+    </RelativeLayout>
+    
+    <LinearLayout 
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <Button
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_style_white1"
+        	android:textColor="@color/blue"
+        	android:textSize="@dimen/normal"
+            android:id="@+id/updatesystem_ok"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+        	android:layout_height="@dimen/x_large"
+            android:text="@string/updatesystem_ok"/>
+        <Button
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_style_white1"
+        	android:textColor="@color/blue"
+        	android:textSize="@dimen/normal"
+            android:id="@+id/updatesystem_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+        	android:layout_height="@dimen/x_large"
+            android:text="@string/updatesystem_cancel"/>
+    </LinearLayout>
+
+</LinearLayout>

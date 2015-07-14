@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical" >
+
+    <ImageView
+        android:id="@+id/data_exchange_notification_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/notification_data_big"
+        android:layout_margin="5dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/data_exchange_notification_img"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/data_exchange_notification_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/normal" />
+
+        <TextView
+            android:id="@+id/data_exchange_notification_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/small" />
+
+        <ProgressBar
+            android:id="@+id/data_exchange_notification_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/data_exchange_notification_title"
+            android:progressDrawable="@drawable/progressbar_horizontal_blue" />
+    </RelativeLayout>
+
+</RelativeLayout>

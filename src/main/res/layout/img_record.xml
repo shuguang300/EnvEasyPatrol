@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/img_record_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:background="@drawable/audio_record_bg" >
+
+    <TextView
+        android:id="@+id/img_record_controll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/img_record_add_img"
+        android:gravity="center"
+        android:text="点击添加图片"
+        android:textColor="#636363"
+        android:textSize="@dimen/small"
+        android:textStyle="italic" />
+
+    <GridView
+        android:id="@+id/img_record_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_record_controll"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp" >
+    </GridView>
+
+</RelativeLayout>
