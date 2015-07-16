@@ -4,7 +4,7 @@ android {
     signingConfigs {
     }
     compileSdkVersion 19
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion "23.0.0 rc3"
     defaultConfig {
         applicationId 'com.env.easypatrol'
         minSdkVersion 14
