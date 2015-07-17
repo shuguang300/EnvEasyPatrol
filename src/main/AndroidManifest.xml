@@ -256,7 +256,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
 
-        <!-- 查看 w巡检卡界面 -->
+        <!-- 查看 巡检卡界面 -->
         
         <activity
             android:name="com.env.activity.ActivityTaskEachCard"
@@ -271,6 +271,14 @@
             android:name="com.zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+
+        <!-- 二维码跳转到该页面显示设备信息 -->
+        <activity
+            android:name="com.env.activity.ActivityDeviceInfo"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
 

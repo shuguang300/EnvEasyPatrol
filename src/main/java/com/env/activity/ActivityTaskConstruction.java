@@ -429,7 +429,9 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		if (resultCode == RESULT_OK && requestCode==1) {
 			Bundle bundle = data.getExtras();
 			String scanResult = bundle.getString("result");
-			Toast.makeText(this,scanResult,Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(ActivityTaskConstruction.this,ActivityDeviceInfo.class);
+			intent.putExtra("deviceId",scanResult);
+			startActivity(intent);
 		}
 	}
 

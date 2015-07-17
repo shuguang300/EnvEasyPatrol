@@ -8,7 +8,7 @@
     
     <string name="save">保存</string>
     <string name="back">返回</string>
-    
+    <string name="refresh">刷新</string>
     
     <string name="login_xml"></string>
     <string name="login_hint_username">登录名</string>

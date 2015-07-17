@@ -1649,7 +1649,7 @@ public class DataService extends Service {
 								try {
 									me.addPart("ClientID", new StringBody(deviceID));
 									me.addPart("file", new FileBody(files[i]));
-									String result = RemoteDataHelper.UploadLogFiles(me);
+									String result = RemoteDataHelper.uploadLogFiles(me);
 									if (result.equals("true")) {
 										if (files[i].exists()) {
 											files[i].delete();

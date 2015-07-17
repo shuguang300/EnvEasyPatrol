@@ -164,7 +164,7 @@ public class RemoteDataHelper {
 		return rs;
 	}
 
-	public static String UploadLogFiles(MultipartEntity mpe){
+	public static String uploadLogFiles(MultipartEntity mpe){
 		HttpPost post = new HttpPost(HttpUtil.URL_Datacenter+"SaveUploadLogFile");
 		post.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,HttpUtil.CONNECT_TIME_OUT);
 		post.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, HttpUtil.READ_TIME_OUT);
@@ -173,7 +173,7 @@ public class RemoteDataHelper {
 			HttpResponse response = new DefaultHttpClient().execute(post);
 			if(response.getStatusLine().getStatusCode() == 200){
 				String result = EntityUtils.toString(response.getEntity(),"utf-8");
-				Log.v("UploadLogFiles", result);
+				Log.v("uploadLogFiles", result);
 				return result;
 			}
 		} catch (ClientProtocolException e) {
@@ -182,5 +182,28 @@ public class RemoteDataHelper {
 			e.printStackTrace();
 		}
 		return "false";
+	}
+
+	public static RequestResult getDeviceInfo(String deviceId){
+		HttpGet get = new HttpGet(HttpUtil.URL_Datacenter+"GetDeviceInfoByDeviceId&deviceId=" + deviceId);
+		get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,HttpUtil.CONNECT_TIME_OUT);
+		get.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, HttpUtil.READ_TIME_OUT);
+		RequestResult rs = new RequestResult();
+		try {
+			HttpResponse response = new DefaultHttpClient().execute(get);
+			if(response.getStatusLine().getStatusCode()==200){
+				String result = EntityUtils.toString(response.getEntity(),"utf-8");
+				rs.setErrorcode(RequestResult.NO_ERROR);
+				rs.setData(result);
+			}else{
+				rs.setErrorcode(RequestResult.SERVER_ERROR);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e){
+			rs.setErrorcode(RequestResult.IOEXCEPTION_ERROR);
+			e.printStackTrace();
+		}
+		return rs;
 	}
 }
