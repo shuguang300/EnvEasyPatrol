@@ -7,7 +7,17 @@
 	<script src="bootstrap/js/jquery-2.1.4.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
     <script>
+	
+		var deviceId ;
+
+        $(function(){
+            deviceId = window.deviceInfo.getDeviceId();
+        });
+		
+		
+
         function getDeviceInfo(){
+
             $.ajax({
                 url:"",
                 type:"post",

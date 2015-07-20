@@ -12,20 +12,28 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.env.bean.DeviceInfo;
 import com.env.bean.RequestResult;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
 import com.env.utils.RemoteDataHelper;
+import com.env.utils.SystemMethodUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/7/17.
  */
 public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListener{
 
-    private int deviceId;
+    private String deviceId;
     private TextView back,title,refresh;
     private WebView webView;
     private ProgressBar progressBar;
+    private DeviceInfo deviceInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,7 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
     public void iniData() {
         super.iniData();
         Intent intent = getIntent();
-        deviceId = intent.getIntExtra("deviceId",0);
+        deviceId = intent.getStringExtra("deviceId");
     }
 
     @Override
@@ -48,18 +56,14 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
         back = (TextView)findViewById(R.id.back);
         title = (TextView)findViewById(R.id.title);
         refresh = (TextView)findViewById(R.id.refresh);
-        webView = (WebView)findViewById(R.id.webView);
         progressBar = (ProgressBar)findViewById(R.id.progress);
+        webView = (WebView)findViewById(R.id.webview);
 
 
         back.setOnClickListener(this);
         refresh.setOnClickListener(this);
 
-        GetDeviceInfoByDeviceId getDeviceInfoByDeviceId = new GetDeviceInfoByDeviceId();
-        getDeviceInfoByDeviceId.execute(deviceId);
-
-//      initialWebView();
-
+        initialWebView();
 
     }
 
@@ -104,6 +108,12 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
                 super.onProgressChanged(view, newProgress);
             }
         });
+
+        webView.addJavascriptInterface(this,"deviceInfo");
+    }
+
+    public String getDeviceId(){
+        return deviceId;
     }
 
     @Override
@@ -143,8 +153,19 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
             super.onPostExecute(rs);
             progressBar.setVisibility(View.GONE);
             if(rs.getErrorcode()==RequestResult.NO_ERROR){
-
+                String msg = rs.getData();
+                Gson gson = new GsonBuilder().setDateFormat(SystemMethodUtil.StandardDateTimeSdf).create();
+                try{
+                    TypeToken typeToken = new TypeToken<ArrayList<DeviceInfo>>(){};
+                    ArrayList<DeviceInfo> deviceInfos = gson.fromJson(msg,typeToken.getType());
+                    if(deviceInfos.size()>0){
+                        deviceInfo = deviceInfos.get(0);
+                    }
+                }catch (Exception ex){
+                    deviceInfo = null;
+                }
             }else {
+                deviceInfo = null;
                 Toast.makeText(ActivityDeviceInfo.this,"获取设备信息失败",Toast.LENGTH_SHORT).show();
             }
 
