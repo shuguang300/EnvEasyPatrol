@@ -184,7 +184,7 @@ public class RemoteDataHelper {
 		return "false";
 	}
 
-	public static RequestResult getDeviceInfo(String deviceId){
+	public static RequestResult getDeviceInfo(int deviceId){
 		HttpGet get = new HttpGet(HttpUtil.URL_Datacenter+"GetDeviceInfoByDeviceId&deviceId=" + deviceId);
 		get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,HttpUtil.CONNECT_TIME_OUT);
 		get.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, HttpUtil.READ_TIME_OUT);

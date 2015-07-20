@@ -2,6 +2,7 @@ package com.env.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -9,9 +10,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.env.bean.RequestResult;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
+import com.env.utils.RemoteDataHelper;
 
 /**
  * Created by Administrator on 2015/7/17.
@@ -51,6 +55,15 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
         back.setOnClickListener(this);
         refresh.setOnClickListener(this);
 
+        GetDeviceInfoByDeviceId getDeviceInfoByDeviceId = new GetDeviceInfoByDeviceId();
+        getDeviceInfoByDeviceId.execute(deviceId);
+
+//      initialWebView();
+
+
+    }
+
+    private void initialWebView(){
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -110,4 +123,32 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
         super.onBackPressed();
         this.finish();
     }
+
+    private class GetDeviceInfoByDeviceId extends AsyncTask<Integer,Integer,RequestResult>{
+
+        @Override
+        protected RequestResult doInBackground(Integer... params) {
+            RequestResult rs = RemoteDataHelper.getDeviceInfo(params[0]);
+            return rs;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(RequestResult rs) {
+            super.onPostExecute(rs);
+            progressBar.setVisibility(View.GONE);
+            if(rs.getErrorcode()==RequestResult.NO_ERROR){
+
+            }else {
+                Toast.makeText(ActivityDeviceInfo.this,"获取设备信息失败",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
 }
