@@ -16,6 +16,7 @@ import com.env.bean.DeviceInfo;
 import com.env.bean.RequestResult;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
+import com.env.utils.HttpUtil;
 import com.env.utils.RemoteDataHelper;
 import com.env.utils.SystemMethodUtil;
 import com.google.gson.Gson;
@@ -109,11 +110,20 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
             }
         });
 
-        webView.addJavascriptInterface(this,"deviceInfo");
+        webView.addJavascriptInterface(this, "deviceInfo");
     }
 
     public String getDeviceId(){
         return deviceId;
+    }
+
+    public String getUrlPath(){
+        String url = HttpUtil.URL_Datacenter+"GetDeviceInfoByDeviceId";
+        return url;
+    }
+
+    public void showWebInfo(String content){
+        Toast.makeText(this,content,Toast.LENGTH_SHORT).show();
     }
 
     @Override

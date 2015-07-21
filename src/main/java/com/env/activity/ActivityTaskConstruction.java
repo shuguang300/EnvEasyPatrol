@@ -251,7 +251,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		Cards2Task = new Intent(ActivityTaskConstruction.this, ActivityTaskList.class);
 		Card2Tag = new Intent(ActivityTaskConstruction.this, ActivityTaskEachCard.class);
 		userNameTv = (TextView)findViewById(R.id.user_name);
-		userNameTv.setText(loginUser.getPositionName()+":"+ loginUser.getRealUserName());
+		userNameTv.setText(loginUser.getPositionName() + ":" + loginUser.getRealUserName());
 		setData();		
 		showLocalDataDialog();
 		FirstLoadDataAsynTask firstLoadDataAsynTask = new FirstLoadDataAsynTask();
@@ -306,17 +306,17 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		isTimerRun =true;
 		if(refreshUI == null){
 			refreshUI = new Timer();
-			refreshUI.schedule(new TimerTask() {				
+			refreshUI.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					isTimerRun =true;
+					isTimerRun = true;
 					setData();
 					msg = refreshUIHandler.obtainMessage();
 					msg.what = RefreshUITimer;
 					msg.sendToTarget();
 					isTimerRun = false;
 				}
-			},5*60*1000, 5*60*1000);
+			}, 5 * 60 * 1000, 5 * 60 * 1000);
 		}
 		isTimerRun =false;
 	}
@@ -429,9 +429,15 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		if (resultCode == RESULT_OK && requestCode==1) {
 			Bundle bundle = data.getExtras();
 			String scanResult = bundle.getString("result");
-			Intent intent = new Intent(ActivityTaskConstruction.this,ActivityDeviceInfo.class);
-			intent.putExtra("deviceId",scanResult);
-			startActivity(intent);
+			try {
+				Integer.parseInt(scanResult);
+				Intent intent = new Intent(ActivityTaskConstruction.this,ActivityDeviceInfo.class);
+				intent.putExtra("deviceId",scanResult);
+				startActivity(intent);
+			} catch (Exception ex){
+				Toast.makeText(ActivityTaskConstruction.this,"未能识别的设备",Toast.LENGTH_SHORT).show();
+			}
+
 		}
 	}
 

@@ -26,3 +26,7 @@ build/
 
 # Log Files
 
+
+# HBuilder Files
+*.project
+
