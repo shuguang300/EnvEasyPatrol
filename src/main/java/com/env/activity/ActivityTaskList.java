@@ -279,7 +279,7 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 			String endDateStr = sdf.format(nowClendar.getTime()).substring(0, 8);
 			tasks = new ArrayList<HashMap<String, String>>();
 			db = DataBaseUtil.getInstance(ActivityTaskList.this).getReadableDatabase();
-			tasks = LocalDataHelper.getNewestTaskByCardAndDeviceGroup(db, Integer.valueOf(card.get("CardID")), nowDTStr, startDateStr + "000000", endDateStr + "000000", devices.get(deviceIndex).getDeviceID());
+			tasks = LocalDataHelper.getNewestTaskByDevice(db, nowDTStr, startDateStr + "000000", endDateStr + "000000", devices.get(deviceIndex).getDeviceID());
 			for (int i = 0; i < tasks.size(); i++) {
 				tasks.get(i).put("Value", "");
 				tasks.get(i).put("IsEnable", "1");

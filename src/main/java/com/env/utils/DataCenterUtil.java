@@ -511,7 +511,7 @@ public class DataCenterUtil {
 					+ "((a.StartDateTime <= ? and a.EndDateTime >= ?) "
 					+ "OR "
 					+ "(a.StartDateTime >=? and a.EndDateTime>? and a.EndDateTime <= ?))) where DeviceID = ?";
-			return db.rawQuery(sql, new String[]{nowTime,nowTime,startTime,nowTime,stopTime,String.valueOf(deviceId),String.valueOf(deviceId)});
+			return db.rawQuery(sql, new String[]{nowTime,nowTime,startTime,nowTime,stopTime,String.valueOf(deviceId)});
 		}
 		return null;
 	}
