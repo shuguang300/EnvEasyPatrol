@@ -594,7 +594,7 @@ public class DataService extends Service {
 					ep_Plan.setTimeout(planCS.getInt(planCS.getColumnIndex("Timeout")));
 					ep_Plan.setTimeoutUnit(planCS.getInt(planCS.getColumnIndex("TimeoutUnit")));
 					ep_Plan.setDurationStopDateIsEndless(planCS.getInt(planCS.getColumnIndex("DurationStopDateIsEndless")) == 1 ? true : false);
-					ep_Plan.setCurVersionID(planCS.getInt(planCS.getColumnIndex("CurVersionID")));
+					ep_Plan.setVersionID(planCS.getInt(planCS.getColumnIndex("CurVersionID")));
 					ep_Plan.setLastVersionID(planCS.getInt(planCS.getColumnIndex("LastVersionID")));
 
 					ep_Plan.setTaskCloseIsInUse(planCS.getInt(planCS.getColumnIndex("TaskCloseIsInUse")) == 1 ? true : false);
@@ -604,7 +604,7 @@ public class DataService extends Service {
 
 					switch (ep_Plan.getPlanType()) {
 					case 0:// 执行一次
-						if (ep_Plan.getCurVersionID() != ep_Plan.getLastVersionID()) {
+						if (ep_Plan.getLastVersionID() < ep_Plan.getVersionID() ) {
 							task = new ContentValues();
 
 							ep_Plan.setExecuteOneTimeTheDateTime(planCS.getString(planCS.getColumnIndex("ExecuteOneTimeTheDateTime")));
@@ -660,12 +660,11 @@ public class DataService extends Service {
 								task.put(EP_PatrolTask.CN_StopDateTime, task.getAsString(EP_PatrolTask.CN_EndDateTime));
 							}
 							tasks.add(task);
-							plan.put("CurVersionID", ep_Plan.getCurVersionID());
-							plan.put("LastVersionID", ep_Plan.getCurVersionID());
+							plan.put("LastVersionID", ep_Plan.getVersionID());
 						}
 						break;
 					case 1:// 循环执行
-						if (ep_Plan.getLastVersionID() != ep_Plan.getCurVersionID()) {
+						if (ep_Plan.getLastVersionID() < ep_Plan.getVersionID()) {
 							ep_Plan.setDurationStartDate(planCS.getString(planCS.getColumnIndex("DurationStartDate")));
 						} else {
 							ep_Plan.setDurationStartDate(SystemMethodUtil.StrToCreateTaskStartDate(planCS.getString(planCS.getColumnIndex("CreateTaskStartDate")), todayDateTime));
@@ -846,8 +845,7 @@ public class DataService extends Service {
 								}
 								startCalendar.add(Calendar.DAY_OF_YEAR, ep_Plan.getRepeatFrequencyDay());
 								plan.put("CreateTaskStartDate", new SimpleDateFormat(SystemMethodUtil.ShortDateSdf).format(lastCreateDate.getTime()));
-								plan.put("CurVersionID", ep_Plan.getCurVersionID());
-								plan.put("LastVersionID", ep_Plan.getCurVersionID());
+								plan.put("LastVersionID", ep_Plan.getVersionID());
 							}
 							break;
 						case 1:// 按周循环
@@ -1025,8 +1023,7 @@ public class DataService extends Service {
 								}
 								startCalendar.add(Calendar.DAY_OF_YEAR, (ep_Plan.getSpanWeek() - 1) * 7);
 								plan.put("CreateTaskStartDate", new SimpleDateFormat(SystemMethodUtil.ShortDateSdf).format(lastCreateDate.getTime()));
-								plan.put("CurVersionID", ep_Plan.getCurVersionID());
-								plan.put("LastVersionID", ep_Plan.getCurVersionID());
+								plan.put("LastVersionID", ep_Plan.getVersionID());
 							}
 							break;
 						case 2:// 按月循环
@@ -1200,8 +1197,7 @@ public class DataService extends Service {
 								}
 								startCalendar.add(Calendar.MONTH, ep_Plan.getSpanMonth());
 								plan.put("CreateTaskStartDate", new SimpleDateFormat(SystemMethodUtil.ShortDateSdf).format(lastCreateDate.getTime()));
-								plan.put("CurVersionID", ep_Plan.getCurVersionID());
-								plan.put("LastVersionID", ep_Plan.getCurVersionID());
+								plan.put("LastVersionID", ep_Plan.getVersionID());
 								break;
 							}
 						}
@@ -1222,7 +1218,7 @@ public class DataService extends Service {
 
 			mDatabase.beginTransaction();
 
-			Cursor deleteDiffPlan = mDatabase.rawQuery("select PlanID from EP_PatrolTaskPlan where CurVersionID != LastVersionID", null);
+			Cursor deleteDiffPlan = mDatabase.rawQuery("select PlanID from EP_PatrolTaskPlan where CurVersionID > LastVersionID", null);
 			deleteDiffPlan.moveToFirst();
 			if (deleteDiffPlan.getCount() > 0) {
 				while (!deleteDiffPlan.isAfterLast()) {

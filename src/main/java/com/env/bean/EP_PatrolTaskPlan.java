@@ -3,7 +3,7 @@ package com.env.bean;
 public class EP_PatrolTaskPlan {
 	private int PlanID;
 	private String CreateTaskStartDate;
-	private int CurVersionID;
+	private int VersionID;
 	private int LastVersionID;
 	private int PlantID;
 	private int PlanType;
@@ -47,8 +47,8 @@ public class EP_PatrolTaskPlan {
 	public String getCreateTaskStartDate() {
 		return CreateTaskStartDate;
 	}
-	public int getCurVersionID() {
-		return CurVersionID;
+	public int getVersionID() {
+		return VersionID;
 	}
 	public int getLastVersionID() {
 		return LastVersionID;
@@ -167,8 +167,8 @@ public class EP_PatrolTaskPlan {
 	public void setCreateTaskStartDate(String createTaskStartDate) {
 		CreateTaskStartDate = createTaskStartDate;
 	}
-	public void setCurVersionID(int curVersionID) {
-		CurVersionID = curVersionID;
+	public void setVersionID(int curVersionID) {
+		VersionID = curVersionID;
 	}
 	public void setLastVersionID(int lastVersionID) {
 		LastVersionID = lastVersionID;

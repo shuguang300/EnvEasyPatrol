@@ -764,7 +764,7 @@ public class LocalDataHelper {
 				cv.put("WeekAt6", plan.getWeekAt6());
 				cv.put("DurationStopDateIsEndless", plan.getDurationStopDateIsEndless());
 				cv.put("PlantID", plan.getPlantID());
-				cv.put("CurVersionID", plan.getCurVersionID());
+				cv.put("CurVersionID", plan.getVersionID());
 				cvs.add(cv);
 			}
 			int PlanID, CurVersionID, LastVersionID;
@@ -781,11 +781,8 @@ public class LocalDataHelper {
 				} else {
 					LastVersionID = planCS.getInt(planCS.getColumnIndex("CurVersionID"));
 					CurVersionID = cv.getAsInteger("CurVersionID");
-					if (LastVersionID != CurVersionID) {
+					if (LastVersionID < CurVersionID) {
 						cv.put("CurVersionID", CurVersionID);
-						cv.put("LastVersionID", LastVersionID);
-					} else {
-						cv.put("CurVersionID", LastVersionID);
 						cv.put("LastVersionID", LastVersionID);
 					}
 					db.update("EP_PatrolTaskPlan", cv, "PlanID = " + PlanID, null);
