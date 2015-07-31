@@ -913,6 +913,8 @@ public class LocalDataHelper {
 					cursor.moveToNext();
 					datas.add(data);
 				}
+				cursor.close();
+				return datas;
 			}
 		}else{
 			cursor = DataCenterUtil.getUploadDataValue(db,dataId,"EP_PatrolResult_String",dicId);
@@ -925,20 +927,22 @@ public class LocalDataHelper {
 					cursor.moveToNext();
 					datas.add(data);
 				}
+				cursor.close();
+				return datas;
 			}
 		}
 		if(cursor!=null){
 			cursor.close();
 		}
-		return  new ArrayList<HashMap<String,String>>();
+		return  datas;
 	}
 
 	public static List<EP_Device> getDeviceGroupByPlantId(SQLiteDatabase db,String plantId){
 		Cursor cursor = DataCenterUtil.getDeviceGroupByPlantId(db,plantId);
-		if(cursor!=null && cursor.getCount()>0){
-			List<EP_Device> datas = new ArrayList<EP_Device>();
+		List<EP_Device> datas = new ArrayList<EP_Device>();
+		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
-			while (!cursor.isAfterLast()){
+			while (!cursor.isAfterLast()) {
 				EP_Device data = new EP_Device();
 				data.setDeviceClassTypeID(cursor.getInt(cursor.getColumnIndex("DeviceClassTypeID")));
 				data.setDeviceOrganizationLevel(cursor.getInt(cursor.getColumnIndex("DeviceOrganizationLevel")));
@@ -949,12 +953,9 @@ public class LocalDataHelper {
 				datas.add(data);
 				cursor.moveToNext();
 			}
-			return  datas;
-		}
-		if(cursor!=null){
 			cursor.close();
 		}
-		return new ArrayList<EP_Device>();
+		return datas;
 	}
 
 	public static List<EP_Device> getDeviceByCardId(SQLiteDatabase db,String cardId){
