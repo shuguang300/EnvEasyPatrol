@@ -1299,7 +1299,7 @@ public class DataService extends Service {
 					int resultType = Integer.valueOf(task.get("ResultType"));
 
 					tmp.put("TaskID", task.get("TaskID"));
-					tmp.put("PlanID", task.get("PlantID"));
+					tmp.put("PlanID", task.get("PlanID"));
 					tmp.put("DeviceID", task.get("DeviceID"));
 					tmp.put("PlantID", task.get("PlantID"));
 					tmp.put("PatrolTagID", task.get("PatrolTagID"));
