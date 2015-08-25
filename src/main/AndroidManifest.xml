@@ -266,11 +266,11 @@
         </activity>
 
         <!--扫描二维码-->
+        <!--android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:name="com.zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
 

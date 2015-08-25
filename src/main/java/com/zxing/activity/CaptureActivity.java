@@ -10,6 +10,8 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -109,6 +111,24 @@ public class CaptureActivity extends Activity implements Callback {
     protected void onDestroy() {
         inactivityTimer.shutdown();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "返回");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 0:
+                setResult(RESULT_CANCELED);
+                this.finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     /**

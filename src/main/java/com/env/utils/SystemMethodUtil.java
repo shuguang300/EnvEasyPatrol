@@ -5,6 +5,7 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -28,6 +29,7 @@ import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.env.activity.ActivitySplash;
+import com.env.component.PatrolApplication;
 import com.env.easypatrol.R;
 
 import java.io.ByteArrayOutputStream;
@@ -408,11 +410,12 @@ public class SystemMethodUtil {
 	}
 	
 	public static String getMacAddress(Context context){
-		String macAddrString="";
+		String macAddr="";
 		WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		macAddrString = wifiInfo.getMacAddress();
-		return macAddrString.replace(":", "");
+		if(wifiInfo==null)macAddr = "";
+		else macAddr = wifiInfo.getMacAddress().replace(":", "");
+		return macAddr;
 	}
 	
 	public static int getAPNType(Context context){

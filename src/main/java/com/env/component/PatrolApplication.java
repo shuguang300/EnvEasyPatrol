@@ -31,6 +31,7 @@ public class PatrolApplication extends Application{
 	public static final String IP = "183.81.180.26:9999/secondwatersupply";
 	
 	public static final String PREFS_NAME = "EnvPrefsFile";
+	public static final String MAC_ADDR = "macaddr";
 	public static final String FIRST_RUN = "firstrun";
 	public static final String DATABASE_READY = "databaseready";
 	public static final String UPDATE_MODE = "updatemode";

@@ -2,7 +2,6 @@ package com.env.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.Service;
@@ -35,6 +34,7 @@ import com.env.utils.DataBaseUtil;
 import com.env.utils.DataCenterUtil;
 import com.env.utils.DialogUtil;
 import com.env.utils.HttpUtil;
+import com.env.utils.LocalDataHelper;
 import com.env.utils.NotificationUtil;
 import com.env.utils.SystemMethodUtil;
 import com.env.utils.SystemParamsUtil;
@@ -82,7 +82,16 @@ public class ActivityLogin extends NfcActivity {
 		setContentView(R.layout.login);
 		iniData();
 		iniView();
-	} 
+		autoLogin();
+	}
+
+	public void autoLogin(){
+		user = LocalDataHelper.getUserInfoFromLocal(settings);
+		if(user!=null){
+			loginThread = new LoginThread(handlerLogin,true);
+			loginThread.doStart();
+		}
+	}
 	
 	@Override
 	public void iniData(){
@@ -90,6 +99,7 @@ public class ActivityLogin extends NfcActivity {
 		settings = getSharedPreferences(PatrolApplication.PREFS_NAME, 0);
 		editor = settings.edit();		
 		IPAddr = settings.getString(PatrolApplication.IP_Addr, HttpUtil.getInstance(ActivityLogin.this).getIPAddr());
+
 	}
 	
 	public void iniView(){
@@ -101,7 +111,6 @@ public class ActivityLogin extends NfcActivity {
 	
 	public void setViewState() {
 		// 初始化记住用户名控件
-		
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -109,7 +118,7 @@ public class ActivityLogin extends NfcActivity {
 				userPwd = etPwd.getText().toString();
 				if(userName!="" && userPwd!=null){
 //					isLogin = true;
-					loginThread = new LoginThread(handlerLogin); // 建立线程实例
+					loginThread = new LoginThread(handlerLogin,false); // 建立线程实例
 					loginThread.doStart();		
 				}else{
 					Toast.makeText(ActivityLogin.this, "请输入用户名和密码", Toast.LENGTH_SHORT).show();
@@ -277,8 +286,10 @@ public class ActivityLogin extends NfcActivity {
 	
 	protected class LoginThread extends Thread {
 		private Handler handle = null;
+		private boolean autoLogin=false;
 		HashMap<String, Object> params = null;	
-		public LoginThread(Handler hander) {
+		public LoginThread(Handler hander,boolean auto) {
+			autoLogin = auto;
 			handle = hander;
 		}
 		public void doStart() {
@@ -297,11 +308,18 @@ public class ActivityLogin extends NfcActivity {
 			super.run();
 			Message msg = handle.obtainMessage();
 			try {
-				user = DataCenterUtil.login(userName, userPwd, db);
-				if(user==null)msg.what = loginFailed;
-				else if(user.getAccountState()==0) msg.what = accountState;
-				else msg.what = loginSuccess;
-				LoginThread.sleep(1000);
+				if(autoLogin){
+					if(user.getAccountState()==0) msg.what = accountState;
+					else msg.what = loginSuccess;
+					LoginThread.sleep(1000);
+				}else{
+					user = DataCenterUtil.login(userName, userPwd, db);
+					if(user==null)msg.what = loginFailed;
+					else if(user.getAccountState()==0) msg.what = accountState;
+					else msg.what = loginSuccess;
+					LoginThread.sleep(1000);
+				}
+
 			} catch (Exception e) {
 				user = null;
 				msg.what=loginFailed;
