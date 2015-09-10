@@ -54,6 +54,7 @@
     <string name="tasknfccard_menu_showtag">查看巡检项</string>
     <string name="tasknfccard_menu_showtime">显示任务时间</string>
     <string name="tasknfccard_menu_notime">不显示任务时间</string>
+    <string name="tasknfccard_menu_changeview">切换显示方式</string>
     
     <string name="taskeachtag_menu"></string>
     <string name="taskeachtag_menu_all">所有任务</string>

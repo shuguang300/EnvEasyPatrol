@@ -12,13 +12,9 @@ public class NfcActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
-	};
-	public void iniData(){
-		
 	}
-	public void iniView(){
-		
-	}
+	public void iniData(){}
+	public void iniView(){}
 	
 	@Override
 	protected void onResume() {
@@ -28,7 +24,9 @@ public class NfcActivity extends Activity{
 		if (nfcAdapter != null && nfcAdapter.isEnabled()) {
 			nfcAdapter.enableForegroundDispatch(this, NfcUtils.NFCPendingIntent(this), NfcUtils.intentFilters, NfcUtils.techList);
 		}
-	};
+	}
+
+
 	
 	
 	@Override

@@ -42,10 +42,12 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.env.bean.EP_NFCCard;
 import com.env.bean.EP_User;
 import com.env.component.DataService;
 import com.env.component.PatrolApplication;
+import com.env.component.StartUpBroadCast;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
 import com.env.nfc.NfcUtils;
@@ -248,7 +250,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	//初始化操作工界面
 	private void iniUser(){
 		constuction2Tag = (ExpandableListView)findViewById(R.id.construction_card);		
-		Cards2Task = new Intent(ActivityTaskConstruction.this, ActivityTaskList.class);
+		Cards2Task = new Intent(ActivityTaskConstruction.this, ActivityTaskGroup.class);
 		Card2Tag = new Intent(ActivityTaskConstruction.this, ActivityTaskEachCard.class);
 		userNameTv = (TextView)findViewById(R.id.user_name);
 		userNameTv.setText(loginUser.getPositionName() + ":" + loginUser.getRealUserName());
@@ -488,7 +490,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 
 		for(HashMap<String, String> card : cards){
 			int [] counts = DataCenterUtil.getTaskCountByCard(db, Integer.parseInt(card.get("CardID")), nowDTStr, nowDTStr);
-
 			card.put("MountCount", counts[0]+"");
 			card.put("DoneCount", counts[1]+"");
 			card.put("NeedRemind", (counts[0]-counts[1])+"");
@@ -1170,7 +1171,12 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			constuction2Tag.setOnChildClickListener(new OnChildClickListener() {			
 				@Override
 				public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-					Cards2Task.putExtra("Child", consAdapter.getChild(groupPosition, childPosition));
+					HashMap<String,String> hashMap = consAdapter.getChild(groupPosition,childPosition);
+					int doneCount = Integer.parseInt(hashMap.get("DoneCount"));
+					int mountCount = Integer.parseInt(hashMap.get("MountCount"));
+					int taskCount = mountCount-doneCount;
+					Cards2Task.putExtra("TaskCount",taskCount);
+					Cards2Task.putExtra("Child", hashMap);
 					Cards2Task.putExtra("Mode", CARD_NORMAL);
 					startActivityForResult(Cards2Task, ViewUtil.VIEW_DOING_TASK);
 					return true;

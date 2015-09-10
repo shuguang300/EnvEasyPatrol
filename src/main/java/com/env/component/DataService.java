@@ -373,7 +373,7 @@ public class DataService extends Service {
 				try {
 					sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
 					editor = sp.edit();
-					String needUpdate = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(DataService.this));
+					String needUpdate = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(DataService.this,sp,editor));
 					if (needUpdate.equals("false")) {
 						msg.arg2 = Error;
 					} else if (needUpdate.equals("noright")) {
@@ -1634,7 +1634,7 @@ public class DataService extends Service {
 						logFileCount = 0;
 						dataServiceBinder.isUploadLog = true;
 						dataServiceHandler.sendEmptyMessage(UploadLogStart);
-						String deviceID = SystemMethodUtil.getMacAddress(DataService.this);
+						String deviceID = SystemMethodUtil.getMacAddress(DataService.this,sp,editor);
 						String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/EnvEasyPatrol/Log";
 						File dirFile = new File(dirPath);
 						File[] files = dirFile.listFiles();
@@ -1688,7 +1688,7 @@ public class DataService extends Service {
 	 */
 	public void recordClientInfo() {
 		try {
-			String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(DataService.this));
+			String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(DataService.this,sp,editor));
 			if (result.equals("false")) {
 			} else if (result.equals("noright")) {
 				editor.putInt(PatrolApplication.IDENTIFY, 0);

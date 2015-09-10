@@ -70,6 +70,7 @@ public class TaskService extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
+		editor = sp.edit();
 		if(!isServiceRuning()){
 			dataService = new Intent();
 			dataService.setAction("com.env.component.DataService");
@@ -123,10 +124,10 @@ public class TaskService extends Service{
 				@Override
 				public void run() {
 					try {
-						String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(TaskService.this));
-						Log.v("checkAudit", result);
-						
 						editor = sp.edit();
+						String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(TaskService.this,sp,editor));
+						Log.v("checkAudit", result);
+
 						if(result.equals("false")){
 							
 						}else if (result.equals("noright")) {

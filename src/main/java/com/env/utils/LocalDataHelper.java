@@ -356,7 +356,7 @@ public class LocalDataHelper {
 	}
 
 	public static String getTaskValueSelectedStepsByDicValue(SQLiteDatabase db,String taskId ,String dicValue){
-		Cursor cs = DataCenterUtil.getTaskValueSelectedStepsByDicValue(db,taskId, dicValue);
+		Cursor cs = DataCenterUtil.getTaskValueSelectedStepsByDicValue(db, taskId, dicValue);
 		if(cs!=null && cs.getCount()>0){
 			cs.moveToFirst();
 			String result = cs.getString(0);
@@ -956,6 +956,14 @@ public class LocalDataHelper {
 			cursor.close();
 		}
 		return datas;
+	}
+
+	public static HashMap<Integer,ArrayList<HashMap<String, String>>> getNewestTasksByDeviceGroups(SQLiteDatabase db,String nowTime,String startTime,String stopTime,List<EP_Device> devices){
+		HashMap<Integer,ArrayList<HashMap<String, String>>> tasks = new HashMap<Integer,ArrayList<HashMap<String, String>>>();
+		for (int i =0;i<devices.size();i++){
+			tasks.put(devices.get(i).getDeviceID(),getNewestTaskByDevice(db,nowTime,startTime,stopTime,devices.get(i).getDeviceID()));
+		}
+		return tasks;
 	}
 
 	public static List<EP_Device> getDeviceByCardId(SQLiteDatabase db,String cardId){

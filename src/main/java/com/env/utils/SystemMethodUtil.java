@@ -408,16 +408,33 @@ public class SystemMethodUtil {
 		}
 		return mime;
 	}
-	
-	public static String getMacAddress(Context context){
+
+
+	/**
+	 * 获取本机的mac地址，作为机器的唯一识别码
+	 * @param context
+	 * @return
+	 */
+	public static String getMacAddress(Context context,SharedPreferences sp , SharedPreferences.Editor editor){
 		String macAddr="";
 		WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		if(wifiInfo==null)macAddr = "";
-		else macAddr = wifiInfo.getMacAddress().replace(":", "");
+		if(wifiInfo==null){
+			macAddr = sp.getString(PatrolApplication.MAC_ADDR,"");
+			macAddr = "";
+		} else {
+			macAddr = wifiInfo.getMacAddress().replace(":", "");
+			editor.putString(PatrolApplication.MAC_ADDR,macAddr);
+			editor.commit();
+		}
 		return macAddr;
 	}
-	
+
+	/**
+	 * 获取当前网络连接状况
+	 * @param context
+	 * @return
+	 */
 	public static int getAPNType(Context context){
 		ConnectivityManager cManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = cManager.getActiveNetworkInfo();

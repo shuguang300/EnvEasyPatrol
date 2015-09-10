@@ -76,11 +76,10 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 	private ListView listView,deviceListView;
 	private DrawerLayout drawerLayout;
 	private int deviceIndex = 0;
-	private int days, curCardID, cardID, mode;
-	private boolean isChangingCard = false, mustUseCard,showTaskTime = false;
+	private int days, mode;
+	private boolean  mustUseCard,showTaskTime = false;
 	private long oneDayMiles = 86400000;
 	private TextView titleOptions, titleBack, cardName;
-	private ProgressDialog progressDialog;
 	private DataServiceBinder binder;
 	private ServiceConnection conn = new ServiceConnection() {
 		@Override
@@ -254,7 +253,7 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 				}
 			}, 0, 5000);
 		}
-		
+
 		taskNFCCardReceiver = new TaskNFCCardReceiver();
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("com.env.view.PatrolTaskNFCCard.TaskNFCCardReceiver");
@@ -651,6 +650,12 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 				showTaskTime = true;
 				item.setTitle(getResources().getString(R.string.tasknfccard_menu_notime));
 			}
+		} else if (itemId == R.id.patroltasknfccard_menu_changeview){
+			Intent intent = new Intent(ActivityTaskList.this, ActivityTaskGroup.class);
+			intent.putExtra("Child", card);
+			intent.putExtra("Mode", mode);
+			startActivity(intent);
+			finish();
 		}
 		return true;
 	}

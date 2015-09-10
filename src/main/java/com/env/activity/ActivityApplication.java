@@ -216,7 +216,7 @@ public class ActivityApplication extends NfcActivity implements OnClickListener{
 				try {
 					Message msg = handler.obtainMessage();
 					MultipartEntity me = new MultipartEntity();
-					me.addPart("EquipID", new StringBody(SystemMethodUtil.getMacAddress(ActivityApplication.this),Charset.forName("UTF-8")));
+					me.addPart("EquipID", new StringBody(SystemMethodUtil.getMacAddress(ActivityApplication.this,sp,editor),Charset.forName("UTF-8")));
 					me.addPart("Name", new StringBody(mName,Charset.forName("UTF-8")));
 					me.addPart("Tel1", new StringBody(mPhone,Charset.forName("UTF-8")));
 					me.addPart("Tel2", new StringBody(SystemMethodUtil.getLocalPhoneNumber(ActivityApplication.this)+"",Charset.forName("UTF-8")));
@@ -309,9 +309,9 @@ public class ActivityApplication extends NfcActivity implements OnClickListener{
 						public void run() throws NumberFormatException {
 							try {
 								isSubmiting = true;
-								String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(ActivityApplication.this));
 								sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
 								editor = sp.edit();
+								String result = RemoteDataHelper.getMobile(SystemMethodUtil.getMacAddress(ActivityApplication.this,sp,editor));
 								if(result.equals("false")){
 									handler.sendEmptyMessage(4);
 								}else if (result.equals("noright")) {
