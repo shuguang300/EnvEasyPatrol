@@ -9,8 +9,8 @@ android {
         applicationId 'com.env.easypatrol'
         minSdkVersion 14
         targetSdkVersion 8
-        versionCode 9
-        versionName '1.2.6'
+        versionCode 10
+        versionName '1.2.7'
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -35,7 +35,7 @@ android {
     }
 }
 dependencies {
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:22.1.0'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'org.apache.httpcomponents:httpmime:4.1'
     compile 'org.apache.commons:commons-lang3:3.4'

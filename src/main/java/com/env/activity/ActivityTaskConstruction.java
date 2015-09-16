@@ -1,6 +1,7 @@
 package com.env.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -120,6 +121,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
     private LogoutThread thread;
     private ProgressDialog localDataDialog;
     private EP_User loginUser;
+	private ActionBar actionBar;
     private boolean isTimerRun=true,dialogShow=false,getLocalDateIng=false,isNewIntent=false;
     private ServiceConnection connection = new ServiceConnection() {
 		
@@ -195,6 +197,14 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		mBindService();
 		iniLayout();
 		iniBothLayout();
+//		initialActionBar();
+	}
+
+	private void initialActionBar(){
+		actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(loginUser.getPositionName() + ":" + loginUser.getRealUserName());
+		actionBar.show();
 	}
 
 	
@@ -254,7 +264,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		Card2Tag = new Intent(ActivityTaskConstruction.this, ActivityTaskEachCard.class);
 		userNameTv = (TextView)findViewById(R.id.user_name);
 		userNameTv.setText(loginUser.getPositionName() + ":" + loginUser.getRealUserName());
-		setData();		
+		setData();
 		showLocalDataDialog();
 		FirstLoadDataAsynTask firstLoadDataAsynTask = new FirstLoadDataAsynTask();
 		firstLoadDataAsynTask.execute("");
@@ -694,6 +704,8 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	 * 登出
 	 */
 	private void logout(){
+		editor.putString(PatrolApplication.USER_INFO,"");
+		editor.commit();
 		thread = new LogoutThread(refreshUIHandler, ActivityTaskConstruction.this, Logout);
 		thread.doStart("正在注销......");
 	}
@@ -974,6 +986,8 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			if(intent.getExtras().getString("action").equals("PatrolConfig")){
 				SystemParamsUtil.getInstance().logout();
 				NotificationUtil.getInstance().updateStayNotification(ActivityTaskConstruction.this);
+				editor.putString(PatrolApplication.USER_INFO, "");
+				editor.commit();
 				ActivityTaskConstruction.this.finish();
 			}else if (intent.getExtras().getString("action").equals("DataService")||intent.getExtras().getString("action").equals("TaskService")) {
 				Log.v("PatrolConsReceiver", "message has received");

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.env.bean.EP_User;
+import com.env.component.PatrolApplication;
 
 
 public class SystemParamsUtil {
