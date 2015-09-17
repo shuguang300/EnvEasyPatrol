@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.env.easypatrol"
-    android:installLocation="internalOnly"
-    android:versionCode="75"
-    android:versionName="1.7.6" >
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="8" />
+    android:installLocation="internalOnly">
     <!--
 	<uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.nfc"  android:required="true" />   
@@ -58,8 +52,7 @@
         android:allowClearUserData="false"
         android:icon="@drawable/logo"
         android:label="@string/system_appname"
-        android:persistent="true"
-        android:theme="@android:style/Theme.Light.NoTitleBar" >
+        android:persistent="true">
 
 <!-- 		<uses-library android:name="android.test.runner" />
  -->
@@ -68,8 +61,8 @@
             android:name="com.env.activity.ActivitySplash"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -124,7 +117,8 @@
             android:name="com.env.activity.ActivityLogin"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:theme="@android:style/Theme.Holo.Light"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
 
         <!-- tabhost界面，已弃用 -->
@@ -138,7 +132,8 @@
         <activity
             android:name="com.env.activity.ActivityConfig"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!-- 数据管理界面 -->
@@ -199,7 +194,8 @@
             android:name="com.env.activity.ActivityTaskList"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
 
         <!-- 任务列表界面 -->
@@ -207,7 +203,8 @@
             android:name="com.env.activity.ActivityTaskGroup"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
 
         <!-- 图片预览界面-->
@@ -231,21 +228,24 @@
             android:name="com.env.activity.ActivitySingleTask"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
         <!-- 多选任务界面 -->
         <activity
             android:name="com.env.activity.ActivityMultiTask"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
         <!-- 数字任务界面 -->
         <activity
             android:name="com.env.activity.ActivityNumberTask"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!-- 查看单个巡检项界面 -->
@@ -253,7 +253,8 @@
             android:name="com.env.activity.ActivityTaskEachTag"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!-- 查看单个巡检项历史数据的 webview -->
@@ -261,7 +262,8 @@
             android:name="com.env.activity.ActivityEachTagWebView"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!-- 查看 巡检卡界面 -->
@@ -270,7 +272,8 @@
             android:name="com.env.activity.ActivityTaskEachCard"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!--扫描二维码-->
@@ -279,7 +282,8 @@
             android:configChanges="orientation|keyboardHidden"
             android:name="com.zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
         </activity>
 
         <!-- 二维码跳转到该页面显示设备信息 -->
@@ -296,7 +300,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
 
         <!-- 开机启动，系统更新的receiver -->

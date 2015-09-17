@@ -4,51 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        style="@style/action_bar" >
-
-        <TextView
-            android:id="@+id/eachtag_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small"
-            android:text="@string/btn_title_back"
-            android:gravity="center"
-            android:background="@drawable/title_back_bg" />
-
-        <TextView
-            android:id="@+id/eachtag_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small"
-            android:text="@string/btn_title_cons_function"
-            android:gravity="center"
-            android:background="@drawable/title_options_bg" />
-        
-        
-        <TextView
-            android:id="@+id/eachtag_tagname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/eachtag_back"
-            android:layout_toLeftOf="@id/eachtag_options"
-            android:textColor="@color/white"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/large"
-            android:gravity="center"
-            android:singleLine="false"
-            android:minLines="1" />
-        
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

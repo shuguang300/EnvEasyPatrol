@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +44,7 @@ import com.env.widget.ImgRecordTask;
 import com.env.widget.MultiChoice;
 import com.env.widget.SingleChoice;
 
-public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,OnMenuItemClickListener{
+public class ActivityTaskEachTag extends NfcActivity implements OnClickListener{
 	private DataInput dataInputNum;
 	private DataInput dataInputStr;
 	private MultiChoice multiChoice ;
@@ -59,12 +61,10 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 	private View view = null;
 	private Context context;
 	private PlanInfoDialog adb;
-	private TextView txtStartDate,txtStopDate,tagNameTV,tagPlanTV;
+	private TextView txtStartDate,txtStopDate,tagPlanTV;
 	private CustomDatePick datePickerDialog;
 	private Calendar startCL,stopCL,temCL;
-	private TextView titleOptions,titleBack;
 	private Button searchBtn;
-	private PopupMenu popupMenu;
 	private String startDT,stopDT;
 	private ProgressDialog progressDialog = null;
 	private boolean isDialogShow =false;
@@ -76,7 +76,6 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 		init();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void init(){
 		receivedIntent  = getIntent();
 		context = ActivityTaskEachTag.this;
@@ -96,22 +95,20 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 		txtStartDate.setText(sdf.format(startCL.getTime()));
 		txtStopDate.setText(sdf.format(stopCL.getTime()));
 		
-		tagNameTV = (TextView)findViewById(R.id.eachtag_tagname);
 		taskList = (ListView)findViewById(R.id.eachtag_tasklistview);
-		titleOptions = (TextView)findViewById(R.id.eachtag_options);
 		tagPlanTV = (TextView)findViewById(R.id.eachcard_planinfo);
-		titleBack = (TextView)findViewById(R.id.eachtag_back);
 		searchBtn = (Button)findViewById(R.id.eachtag_search);
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		if(task.get("Unit")==null){
-			tagNameTV.setText(task.get("PatrolName"));
+			actionBar.setTitle(task.get("PatrolName"));
 		}else {
-			tagNameTV.setText(task.get("PatrolName")+"("+task.get("Unit")+")");
-		}		
+			actionBar.setTitle(task.get("PatrolName")+"("+task.get("Unit")+")");
+		}
 		ResultType = Integer.valueOf(task.get("ResultType"));
 		
-		titleOptions.setOnClickListener(this);
-		titleBack.setOnClickListener(this);
-		searchBtn.setOnClickListener(this);	
+		searchBtn.setOnClickListener(this);
 		tagPlanTV.setOnClickListener(this);
 		
 		task.put("PlanName", LocalDataHelper.getPlanNameByTag(db, Integer.valueOf(task.get("PatrolTagID"))));
@@ -143,22 +140,43 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 	protected void onPause() {
 		super.onPause();
 	}
-	private void changeDataType(){
-		if(popupMenu ==null){
-			popupMenu = new PopupMenu(context, titleOptions);
-			popupMenu.inflate(R.menu.patroleachtag_popupmenu);
-			popupMenu.setOnMenuItemClickListener(this);
-		}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.patroleachtag_popupmenu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
 		for(int i =0;i<4;i++){
 			if(i==opsPos){
-				popupMenu.getMenu().getItem(i).setChecked(true);
+				menu.getItem(i).setChecked(true);
 			}else {
-				popupMenu.getMenu().getItem(i).setChecked(false);
+				menu.getItem(i).setChecked(false);
 			}
 		}
-		popupMenu.show();
+		return super.onPrepareOptionsMenu(menu);
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int itemId = item.getItemId();
+		if (itemId == R.id.taskeachtag_menu_all) {
+			opsPos = 0;
+		} else if (itemId == R.id.taskeachtag_menu_done) {
+			opsPos = 1;
+		} else if (itemId == R.id.taskeachtag_menu_undo) {
+			opsPos = 2;
+		} else if (itemId == R.id.taskeachtag_menu_unupload) {
+			opsPos = 3;
+		} else if(itemId == android.R.id.home){
+			onBackPressed();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+
 	private void searchData(){
 		if(startCL.getTime().getTime()>stopCL.getTime().getTime()){
 			Toast.makeText(context, "开始日期不能大于结束日期", Toast.LENGTH_LONG).show();
@@ -230,13 +248,9 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 			dialogID  = R.id.tv_stop_date;
 			temCL.setTime(stopCL.getTime());
 			showCalendar();
-		} else if (id == R.id.eachtag_back) {
-			onBackPressed();
-		} else if (id == R.id.eachtag_search) {
+		}  else if (id == R.id.eachtag_search) {
 			searchData();
-		} else if (id == R.id.eachtag_options) {
-			changeDataType();
-		} else if (id == R.id.eachcard_planinfo) {
+		}  else if (id == R.id.eachcard_planinfo) {
 			if(adb==null){
 				adb = new PlanInfoDialog(ActivityTaskEachTag.this,R.style.PlanInfoDialog,task.get("Description"));
 			}
@@ -441,21 +455,7 @@ public class ActivityTaskEachTag extends NfcActivity implements OnClickListener,
 		}		
 	}
 
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		int itemId = item.getItemId();
-		if (itemId == R.id.taskeachtag_menu_all) {
-			opsPos = 0;
-		} else if (itemId == R.id.taskeachtag_menu_done) {
-			opsPos = 1;
-		} else if (itemId == R.id.taskeachtag_menu_undo) {
-			opsPos = 2;
-		} else if (itemId == R.id.taskeachtag_menu_unupload) {
-			opsPos = 3;
-		}
-		return true;
-	}
-	
+
 	class PlanInfoDialog extends Dialog{
 		private String mContent;
 		private LinearLayout layout;

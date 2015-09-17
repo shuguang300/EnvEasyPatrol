@@ -77,8 +77,7 @@ import java.util.TimerTask;
  * 巡检系统登录后的界面，展示泵房以及泵房下面的巡检卡
  * @author sk
  */
-@SuppressLint("InflateParams")
-public class ActivityTaskConstruction extends NfcActivity implements OnClickListener,OnMenuItemClickListener{
+public class ActivityTaskConstruction extends NfcActivity{
 	/** 
 	 * 以单击模式进入系统 
 	 */
@@ -101,7 +100,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	private ExpandableListView constuction2Tag;
 	private GetLocalDataAsyncTask getLocalDataAsyncTask;
 	private ConstructionAdapter consAdapter;
-	private TextView userNameTv,titleOptions,titleLogout;
 	private String lastTime;
 	private SQLiteDatabase db =null;
 	private ArrayList<HashMap<String, String>>plantInfos,cards;
@@ -116,8 +114,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
     private String [] longClickItme = {"查看本卡片巡检项"};
     private DataService.DataServiceBinder binder;
     private PatrolConsReceiver receiver;
-    private PopupMenu optionsMenu;
-    private PopupWindow popupMenu;
     private LogoutThread thread;
     private ProgressDialog localDataDialog;
     private EP_User loginUser;
@@ -196,8 +192,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		registerReceiver(receiver, intentFilter);
 		mBindService();
 		iniLayout();
-		iniBothLayout();
-//		initialActionBar();
+		initialActionBar();
 	}
 
 	private void initialActionBar(){
@@ -208,30 +203,10 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	}
 
 	
-	private void iniBothLayout(){
-		titleLogout = (TextView)findViewById(R.id.user_logout);
-		titleLogout.setOnClickListener(this);
-		titleOptions = (TextView)findViewById(R.id.construction_options);
-		titleOptions.setOnClickListener(this);
-	}
-	
+
 	private void iniLayout(){		
 		setContentView(R.layout.construction_card);
 		iniUser();
-//		switch (planttype) {
-//		case 3:
-//			setContentView(R.item_imageview.construction_card_admin);
-//			iniAdmin();
-//			if(refreshUI !=null){
-//				refreshUI.cancel();
-//				refreshUI = null;
-//			}
-//			break;
-//
-//		default:
-//			
-//			break;
-//		}
 	}
 	
 	
@@ -262,8 +237,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		constuction2Tag = (ExpandableListView)findViewById(R.id.construction_card);		
 		Cards2Task = new Intent(ActivityTaskConstruction.this, ActivityTaskGroup.class);
 		Card2Tag = new Intent(ActivityTaskConstruction.this, ActivityTaskEachCard.class);
-		userNameTv = (TextView)findViewById(R.id.user_name);
-		userNameTv.setText(loginUser.getPositionName() + ":" + loginUser.getRealUserName());
 		setData();
 		showLocalDataDialog();
 		FirstLoadDataAsynTask firstLoadDataAsynTask = new FirstLoadDataAsynTask();
@@ -336,12 +309,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(optionsMenu!=null){
-			optionsMenu.dismiss();
-		}
-		if(popupMenu!=null&&popupMenu.isShowing()){
-			popupMenu.dismiss();
-		}
 	}
 	
 	@Override
@@ -466,7 +433,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			public void onClick(DialogInterface dialog, int whichButton) {
 				thread = new LogoutThread(refreshUIHandler, ActivityTaskConstruction.this, Exit);
 				thread.doStart("正在退出程序......");
-			}			
+			}
 		});
 		builder.setNegativeButton("取消", null);
 		return builder.create();
@@ -635,70 +602,55 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("menu");
+		getMenuInflater().inflate(R.menu.patroltaskconstruction_popupmenu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
+
 	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		if (popupMenu == null) {
-			popupMenu = new MenuPopupWindow(ActivityTaskConstruction.this, new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					switch (v.getId()){
-						case R.id.menu_popwind_download:
-							popupMenu.dismiss();
-							checkUpdate();
-							break;
-						case R.id.menu_popwind_upload:
-							popupMenu.dismiss();
-							uploadData();
-							break;
-						case R.id.menu_popwind_logout:
-							popupMenu.dismiss();
-							logout();
-							break;
-						case R.id.menu_popwind_setting:
-							popupMenu.dismiss();
-							Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
-							startActivity(config);
-							break;
-					}
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId()==android.R.id.home){
+			AlertDialog.Builder builder = new AlertDialog.Builder(ActivityTaskConstruction.this);
+			builder.setTitle("系统信息");
+			builder.setMessage("是否注销当前用户？");
+			builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					logout();
 				}
 			});
+			builder.setNegativeButton("取消", null);
+			builder.create().show();
+		}else{
+			switch (item.getOrder()) {
+				case 0:
+					checkUpdate();
+					break;
+				case 1:
+					uploadData();
+					break;
+				case 2:
+					goToQrCodeActivity();
+					break;
+				case 3:
+					break;
+				case 4:
+					Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
+					startActivity(config);
+					break;
+				case 5:
+					logout();
+					break;
+			}
 		}
-		if (!popupMenu.isShowing()) {
-//			 最重要的一步：弹出显示 在指定的位置(parent) 最后两个参数 是相对于 x / y 轴的坐标 
-			popupMenu.showAtLocation(findViewById(R.id.menu_popwind_main),Gravity.BOTTOM, 0, 30);
-		}
-		return false;
+
+		return super.onOptionsItemSelected(item);
 	}
-	
+
+
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
-	
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {		
-//		switch (item.getItemId()) {
-//		case 0:// 检查更新		
-//			checkUpdate();
-//			break;
-//		case 1:// 数据上传
-//			uploadData();
-//			break;
-//		}
-//		if (item.getItemId() == 2) {
-//			Intent config = new Intent(PatrolTaskConstruction.this,PatrolConfig.class);
-//			startActivity(config);
-//		}
-//		if (item.getItemId() == 3) {
-//			 logout();
-//		}
-//		return true;
-//	}
-	
 	
 	/**
 	 * 登出
@@ -733,63 +685,6 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 		}
 	}
 		
-	/**
-	 * 右上角的控制按钮弹出一个菜单
-	 */
-	private void showOptionsMenu(){
-		optionsMenu = new PopupMenu(ActivityTaskConstruction.this, titleOptions);
-		optionsMenu.inflate(R.menu.patroltaskconstruction_popupmenu);
-		optionsMenu.setOnMenuItemClickListener(this);
-//		if(showAllCard){
-//			optionsMenu.getMenu().getItem(3).setTitle(R.string.construction_menu_showdata);
-//		}else {
-//			optionsMenu.getMenu().getItem(3).setTitle(R.string.construction_menu_showall);
-//		}
-//		optionsMenu.getMenu().getItem(3).setChecked(showAllCard);
-		optionsMenu.show();
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		switch (item.getOrder()) {
-			case 0:
-				checkUpdate();
-				break;
-			case 1:
-				uploadData();
-				break;
-			case 2:
-//				showCard();
-//				去二维码扫码界面
-				goToQrCodeActivity();
-				break;
-			case 3:
-//			if(showAllCard){
-//				showAllCard = false;
-//			}else {
-//				showAllCard = true;
-//			}
-//			if(sp==null){
-//				sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
-//			}
-//			if(editor==null){
-//				editor = sp.edit();
-//			}
-//			editor.putBoolean(PatrolApplication.CONS_CARD_INFLATEER, showAllCard);
-//			editor.commit();
-//			getLocalData();
-				break;
-			case 4:
-				Intent config = new Intent(ActivityTaskConstruction.this,ActivityConfig.class);
-				startActivity(config);
-				break;
-			case 5:
-				logout();
-				break;
-		}
-		return true;
-	}
-
 	/**
 	 * 通过查找卡号进入任务界面
 	 */
@@ -995,34 +890,7 @@ public class ActivityTaskConstruction extends NfcActivity implements OnClickList
 			}				
 		}
 	}
-		
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent();
-		int id = v.getId();
-		if (id == R.id.admin_btn_data) {
-			intent.setClass(ActivityTaskConstruction.this, ActivityAdminData.class);
-			startActivity(intent);
-		} else if (id == R.id.admin_btn_config) {
-			intent.setClass(ActivityTaskConstruction.this, ActivityAdminConfig.class);
-			startActivity(intent);
-		} else if (id == R.id.user_logout) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(ActivityTaskConstruction.this);
-			builder.setTitle("系统信息");
-			builder.setMessage("是否注销当前用户？");
-			builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					logout();
-				}
-			});
-			builder.setNegativeButton("取消", null);
-			builder.create().show();
-		} else if (id == R.id.construction_options) {
-			showOptionsMenu();
-		}
-		
-		
-	}
+
 	
 
 	

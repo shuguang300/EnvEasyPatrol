@@ -1,5 +1,6 @@
 package com.env.activity;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -29,9 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ActivityNumberTask extends NfcActivity implements View.OnClickListener{
+public class ActivityNumberTask extends NfcActivity{
 	private HashMap<String, String> task;
-	private TextView title,back,save;
 	private MyGridView gridView;
 	private ArrayList<HashMap<String,String>> media;
 	private SQLiteDatabase db;
@@ -71,9 +73,6 @@ public class ActivityNumberTask extends NfcActivity implements View.OnClickListe
 	@Override
 	public void iniView() {
 		super.iniView();
-		title = (TextView)findViewById(R.id.title);
-		back = (TextView)findViewById(R.id.back);
-		save = (TextView)findViewById(R.id.save);
 		editText = (EditText)findViewById(R.id.text);
 		valueEditText = (EditText)findViewById(R.id.value);
 		gridView = (MyGridView)findViewById(R.id.grid);
@@ -136,10 +135,30 @@ public class ActivityNumberTask extends NfcActivity implements View.OnClickListe
 			}
 		});
 
-		title.setOnClickListener(this);
-		back.setOnClickListener(this);
-		save.setOnClickListener(this);
-		title.setText(task.get("PatrolName"));
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(task.get("PatrolName"));
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_taskpage,menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				onBackPressed();
+				break;
+			case R.id.save:
+				saveOk = save();
+				if(saveOk!=0) onBackPressed();
+				break;
+
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private HashMap<String, String> receiveTask(){
@@ -213,22 +232,6 @@ public class ActivityNumberTask extends NfcActivity implements View.OnClickListe
 		super.onNewIntent(intent);
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-			case R.id.back:
-				onBackPressed();
-				break;
-			case R.id.title:
-
-				break;
-			case R.id.save:
-				saveOk = save();
-				if(saveOk!=0) onBackPressed();
-				break;
-		}
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

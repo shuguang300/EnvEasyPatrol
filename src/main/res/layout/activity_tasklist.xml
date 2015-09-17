@@ -4,40 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout style="@style/action_bar" >
-
-        <TextView
-            android:id="@+id/card_task_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/title_back_bg"
-            android:gravity="center"
-            android:text="@string/btn_title_back"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small" />
-
-        <TextView
-            android:id="@+id/card_task_cardname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/large" />
-
-        <TextView
-            android:id="@+id/card_task_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/title_options_bg"
-            android:gravity="center"
-            android:text="@string/btn_title_card_function"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small" />
-    </RelativeLayout>
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawlayout"

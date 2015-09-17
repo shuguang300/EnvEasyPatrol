@@ -1,9 +1,12 @@
 package com.env.activity;
 import java.util.HashMap;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
@@ -16,10 +19,9 @@ import com.env.nfc.NfcActivity;
 import com.env.utils.HttpUtil;
 import com.env.easypatrol.R;
 
-public class ActivityEachTagWebView extends NfcActivity implements OnClickListener{
+public class ActivityEachTagWebView extends NfcActivity{
 	
 	private WebView webView;
-	private TextView back,refresh,name;
 	private HashMap<String, String> mData;
 	private ProgressBar mProgressBar;
 	private int mTagID;
@@ -29,18 +31,16 @@ public class ActivityEachTagWebView extends NfcActivity implements OnClickListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.patroltagwebview);
+		mProgressBar = (ProgressBar)findViewById(R.id.patroltagwebview_progress1);
 		mData = (HashMap<String, String>)getIntent().getExtras().getSerializable("task");
 		mTagID = Integer.valueOf(mData.get("PatrolTagID"));
 		mTagType = Integer.valueOf(mData.get("ResultType"));
-		setContentView(R.layout.patroltagwebview);
-		mProgressBar = (ProgressBar)findViewById(R.id.patroltagwebview_progress1);
-		name = (TextView)findViewById(R.id.patroltagwebview_tagname);
-		refresh = (TextView)findViewById(R.id.patroltagwebview_options);
-		back = (TextView)findViewById(R.id.patroltagwebview_back);
+
 		webView = (WebView)findViewById(R.id.patroltagwebview_webview1);
-		back.setOnClickListener(this);
-		refresh.setOnClickListener(this);
-		name.setText(mData.get("PatrolName"));
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(mData.get("PatrolName"));
 		webView.getSettings().setUseWideViewPort(true);
 		webView.getSettings().setLoadWithOverviewMode(true);
 		webView.getSettings().setJavaScriptEnabled(true); 
@@ -113,16 +113,22 @@ public class ActivityEachTagWebView extends NfcActivity implements OnClickListen
 		super.onBackPressed();
 		finish();
 	}
-	
 
 	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		if (id == R.id.patroltagwebview_back) {
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0,0,0,"刷新");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
 			finish();
-		} else if (id == R.id.patroltagwebview_options) {
+		} else if (id == 0) {
 			webView.loadUrl(urlPath);
 		}
-		
+		return super.onOptionsItemSelected(item);
 	}
+
 }

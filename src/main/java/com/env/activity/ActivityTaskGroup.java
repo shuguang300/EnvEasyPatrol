@@ -1,5 +1,6 @@
 package com.env.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -16,6 +17,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,7 @@ import java.util.TimerTask;
 /**
  * Created by SK on 2015/9/9.
  */
-public class ActivityTaskGroup extends NfcActivity implements View.OnClickListener,PopupMenu.OnMenuItemClickListener {
+public class ActivityTaskGroup extends NfcActivity {
     private int VIEW_HISTORY_TASK = 1;
     private int days,  mode;
     private boolean  mustUseCard,showTaskTime = false;
@@ -64,13 +66,11 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
     private TaskGroupAdapter adapter;
     private TaskNFCCardReceiver taskNFCCardReceiver;
     private SQLiteDatabase db;
-    private PopupMenu optionsMenu;
     private Timer timer = null, fastUpload = null;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private Message msg;
     private ExpandableListView groupListView;
-    private TextView titleOptions, titleBack, cardName;
     private DataService.DataServiceBinder binder;
     private ServiceConnection conn = new ServiceConnection() {
         @Override
@@ -138,17 +138,13 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
 
     @Override
     public void iniView() {
-        cardName = (TextView) findViewById(R.id.card_task_cardname);
-        titleOptions = (TextView) findViewById(R.id.card_task_options);
-        titleBack = (TextView) findViewById(R.id.card_task_back);
         groupListView = (ExpandableListView)findViewById(R.id.grouplist);
 
         adapter = new TaskGroupAdapter();
 
-        cardName.setText(card.get("CardName"));
 
-        titleOptions.setOnClickListener(this);
-        titleBack.setOnClickListener(this);
+
+        initialActionBar();
 
         groupListView.setAdapter(adapter);
 
@@ -238,6 +234,13 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
         registerReceiver(taskNFCCardReceiver, intentFilter);
     }
 
+    private void initialActionBar(){
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(card.get("CardName"));
+        actionBar.show();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -285,17 +288,13 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
 
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.card_task_options) {
-            showOptionsMenu();
-        } else if (id == R.id.card_task_back) {
-            onBackPressed();
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.patroltasknfccard_popupmenu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.patroltasknfccard_menu_upload) {
             uploadData();
@@ -315,8 +314,10 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
             intent.putExtra("Mode", mode);
             startActivity(intent);
             finish();
+        } else if(itemId ==android.R.id.home){
+            onBackPressed();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -347,6 +348,7 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
         }
         return arg0;
     }
+
 
     private void update() {
         if (timer != null) {
@@ -645,14 +647,6 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
 
     }
 
-    private void showOptionsMenu() {
-        if (optionsMenu == null) {
-            optionsMenu = new PopupMenu(ActivityTaskGroup.this, titleOptions);
-            optionsMenu.inflate(R.menu.patroltasknfccard_popupmenu);
-            optionsMenu.setOnMenuItemClickListener(this);
-        }
-        optionsMenu.show();
-    }
 
     private void uploadData() {
         mBindService();

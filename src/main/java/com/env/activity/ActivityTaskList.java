@@ -1,5 +1,6 @@
 package com.env.activity;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -18,6 +19,7 @@ import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,7 +58,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ActivityTaskList extends NfcActivity implements OnClickListener, OnMenuItemClickListener{
+public class ActivityTaskList extends NfcActivity{
 	private int VIEW_HISTORY_TASK = 1;
 	private String [] LONG_CLICK_DIALOG_ITEM = {"查看本地数据","查看远程数据"};
 	private Intent getIntent, service;
@@ -79,7 +81,6 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 	private int days, mode;
 	private boolean  mustUseCard,showTaskTime = false;
 	private long oneDayMiles = 86400000;
-	private TextView titleOptions, titleBack, cardName;
 	private DataServiceBinder binder;
 	private ServiceConnection conn = new ServiceConnection() {
 		@Override
@@ -153,16 +154,12 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 		super.onStop();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void initialize() {
 		getIntent = getIntent();
 		sp = getSharedPreferences(PatrolApplication.PREFS_NAME, MODE_PRIVATE);
 		editor = sp.edit();
 		mBindService();
 		db = DataBaseUtil.getInstance(ActivityTaskList.this).getReadableDatabase();
-		cardName = (TextView) findViewById(R.id.card_task_cardname);
-		titleOptions = (TextView) findViewById(R.id.card_task_options);
-		titleBack = (TextView) findViewById(R.id.card_task_back);
 		listView = (ListView)findViewById(R.id.tasklist);
 		deviceListView = (ListView)findViewById(R.id.devicelist);
 		drawerLayout = (DrawerLayout)findViewById(R.id.drawlayout);
@@ -233,11 +230,8 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 			}
 		});
 
-		titleOptions.setOnClickListener(this);
-		titleBack.setOnClickListener(this);
 		card = (HashMap<String, String>) getIntent.getSerializableExtra("Child");
 		mode = getIntent.getExtras().getInt("Mode");
-		cardName.setText(card.get("CardName"));
 		setPlantData(card.get("CardID"));
 		setData();
 		prepareForView();
@@ -258,6 +252,14 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("com.env.view.PatrolTaskNFCCard.TaskNFCCardReceiver");
 		registerReceiver(taskNFCCardReceiver, intentFilter);
+		initialActionBar();
+	}
+
+	private void initialActionBar(){
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(card.get("CardName"));
+		actionBar.show();
 	}
 
 	private void setPlantData(String cardId){
@@ -539,12 +541,6 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 			timer.cancel();
 			timer = null;
 		}
-
-		// Intent intent = new Intent();
-		// intent.setClass(this, PatrolTaskConstruction.class);
-		// intent.putExtra("NeedTips", false);
-		// startActivity(intent);
-		// this.finish();
 	}
 
 	@Override
@@ -609,15 +605,6 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 		}
 	}
 
-	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		if (id == R.id.card_task_options) {
-			showOptionsMenu();
-		} else if (id == R.id.card_task_back) {
-			onBackPressed();
-		}
-	}
 
 	public void showTag() {
 		Intent intent = new Intent(ActivityTaskList.this, ActivityTaskEachCard.class);
@@ -626,17 +613,14 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 		startActivityForResult(intent, 0);
 	}
 
-	private void showOptionsMenu() {
-		if (optionsMenu == null) {
-			optionsMenu = new PopupMenu(ActivityTaskList.this, titleOptions);
-			optionsMenu.inflate(R.menu.patroltasknfccard_popupmenu);
-			optionsMenu.setOnMenuItemClickListener(this);
-		}
-		optionsMenu.show();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.patroltasknfccard_popupmenu,menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onMenuItemClick(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		int itemId = item.getItemId();
 		if (itemId == R.id.patroltasknfccard_menu_upload) {
 			uploadData();
@@ -656,8 +640,10 @@ public class ActivityTaskList extends NfcActivity implements OnClickListener, On
 			intent.putExtra("Mode", mode);
 			startActivity(intent);
 			finish();
+		} else if(itemId == android.R.id.home){
+			onBackPressed();
 		}
-		return true;
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**

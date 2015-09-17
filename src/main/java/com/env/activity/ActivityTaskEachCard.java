@@ -3,10 +3,12 @@ package com.env.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -26,7 +28,7 @@ import com.env.widget.ImgRecordTask;
 import com.env.widget.MultiChoice;
 import com.env.widget.SingleChoice;
 
-public class ActivityTaskEachCard extends NfcActivity implements OnClickListener{
+public class ActivityTaskEachCard extends NfcActivity{
 	private DataInput dataInputNum;
 	private DataInput dataInputStr;
 	private MultiChoice multiChoice ;
@@ -36,7 +38,6 @@ public class ActivityTaskEachCard extends NfcActivity implements OnClickListener
 	private Intent getedIntent;
 	private HashMap<String, String> card;
 	private ArrayList<HashMap<String, String>> tags;
-	private TextView cardName,titleBack;
 	private SQLiteDatabase db;
 	private ListView tagList;
 	private TaglistAdapter adapter;
@@ -51,17 +52,15 @@ public class ActivityTaskEachCard extends NfcActivity implements OnClickListener
 		ini();
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void ini (){
 		getedIntent = getIntent();
 		context = ActivityTaskEachCard.this;
 		db = DataBaseUtil.getInstance(ActivityTaskEachCard.this).getReadableDatabase();
 		card = (HashMap<String, String>)getedIntent.getSerializableExtra("Child");
-		cardName = (TextView)findViewById(R.id.eachcard_cardname);	
 		tagList = (ListView)findViewById(R.id.eachcard_tag);
-		titleBack = (TextView)findViewById(R.id.eachcard_back);
-		cardName.setText(card.get("CardName"));
-		titleBack.setOnClickListener(this);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(card.get("CardName"));
 	}
 	
 	public void setData(){
@@ -186,12 +185,11 @@ public class ActivityTaskEachCard extends NfcActivity implements OnClickListener
 	}
 
 	@Override
-	public void onClick(View v) {
-		int id = v.getId();
-		if (id == R.id.eachcard_back) {
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
 			onBackPressed();
-		} else {
 		}
-		
+		return super.onOptionsItemSelected(item);
 	}
 }

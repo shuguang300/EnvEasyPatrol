@@ -6,6 +6,8 @@ import com.env.utils.SystemMethodUtil;
 import com.env.utils.HttpUtil;
 import com.env.utils.SystemParamsUtil;
 import com.env.easypatrol.R;
+
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
@@ -16,6 +18,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,7 +33,7 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;	
 	private RelativeLayout titleVersion,titleIPAd,titleUpdateMode,titleTips,uploadLog;
-	private TextView valueVersion,titleBack;
+	private TextView valueVersion;
 	private Button btnLogout;
 	private CheckBox cbMode,cbTips;
 	private ImageView imgVersion;
@@ -55,6 +58,13 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 		SystemParamsUtil.getInstance().addActivity(this);
 		sp = getSharedPreferences(PatrolApplication.PREFS_NAME, Context.MODE_PRIVATE);
 		iniView();
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(getResources().getString(R.string.config_title));
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.show();
+
+
 	}
 	private void mBindService(){
 		if(binder==null){
@@ -75,7 +85,6 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 		
 		btnLogout = (Button)findViewById(R.id.config_btn_logout);
 		
-		titleBack = (TextView)findViewById(R.id.config_back);
 		valueVersion = (TextView)findViewById(R.id.config_value_version);
 		
 		valueVersion.setText(SystemMethodUtil.getVersionName(ActivityConfig.this));
@@ -83,7 +92,6 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 		titleVersion.setOnClickListener(this);
 		titleIPAd.setOnClickListener(this);
 		btnLogout.setOnClickListener(this);
-		titleBack.setOnClickListener(this);
 		titleUpdateMode.setOnClickListener(this);
 		titleTips.setOnClickListener(this);
 		uploadLog.setOnClickListener(this);
@@ -179,11 +187,18 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+				onBackPressed();
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()){
-			case R.id.config_btn_logout:
-				logout();
-				break;
 			case R.id.config_title_ipaddr:
 				AlertDialog.Builder adb  = new AlertDialog.Builder(ActivityConfig.this);
 				adb.setTitle("设置服务器IP地址");
@@ -235,8 +250,8 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 					cbTips.setChecked(true);
 				}
 				break;
-			case R.id.config_back:
-				onBackPressed();
+			case R.id.config_btn_logout:
+				logout();
 				break;
 			case R.id.config_title_uploadlog:
 				if(SystemMethodUtil.getAPNType(ActivityConfig.this)!=SystemMethodUtil.NoNetWork){

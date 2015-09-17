@@ -5,31 +5,6 @@
     android:background="@color/gray"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        style="@style/action_bar" >
-        
-        <TextView
-            android:id="@+id/config_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small"
-            android:text="@string/btn_title_back"
-            android:gravity="center"
-            android:background="@drawable/title_back_bg" />
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/config_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/large" />
-        
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

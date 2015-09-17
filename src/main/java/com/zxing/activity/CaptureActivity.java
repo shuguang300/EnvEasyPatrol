@@ -1,5 +1,6 @@
 package com.zxing.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -46,7 +47,6 @@ public class CaptureActivity extends Activity implements Callback {
     private String characterSet;
     private InactivityTimer inactivityTimer;
     private MediaPlayer mediaPlayer;
-    private TextView back;
     private boolean playBeep;
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
@@ -65,15 +65,16 @@ public class CaptureActivity extends Activity implements Callback {
 //		cancelScanButton = (Button) this.findViewById(R.id.btn_cancel_scan);
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
-        back = (TextView)findViewById(R.id.back);
-        back.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });
+        initialActionBar();
     }
+
+    private void initialActionBar(){
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.show();
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -125,14 +126,13 @@ public class CaptureActivity extends Activity implements Callback {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        menu.add(0, 0, 0, "返回");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 0:
+            case android.R.id.home:
                 setResult(RESULT_CANCELED);
                 this.finish();
                 break;

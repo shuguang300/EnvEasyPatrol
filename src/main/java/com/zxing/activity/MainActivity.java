@@ -35,7 +35,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-					
 				Intent openCameraIntent = new Intent(MainActivity.this,CaptureActivity.class);
 				startActivityForResult(openCameraIntent, 0);
 			}
