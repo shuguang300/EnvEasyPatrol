@@ -9,8 +9,8 @@ android {
         applicationId 'com.env.easypatrol'
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 10
-        versionName '1.2.7'
+        versionCode 12
+        versionName '2.0.0'
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -40,4 +40,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.zxing:core:3.2.0'
+    compile files('libs/jpush-sdk-release1.8.1.jar')
 }

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class NfcActivity extends Activity{
 	private NfcAdapter nfcAdapter;
 	@Override
@@ -18,6 +20,7 @@ public class NfcActivity extends Activity{
 	
 	@Override
 	protected void onResume() {
+		JPushInterface.onResume(this);
 		super.onResume();
 		SystemParamsUtil.getInstance().setCurActivityName(this.getClass().getName());
 		nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -31,6 +34,7 @@ public class NfcActivity extends Activity{
 	
 	@Override
 	protected void onPause() {
+		JPushInterface.onPause(this);
 		super.onPause();
 		if(nfcAdapter!=null && nfcAdapter.isEnabled()){
 			nfcAdapter.disableForegroundDispatch(this);

@@ -26,6 +26,7 @@ import com.env.bean.EP_PatrolTask;
 import com.env.bean.EP_PatrolTaskPlan;
 import com.env.bean.EP_RightData;
 import com.env.bean.EP_UploadObject;
+import com.env.bean.EP_User;
 import com.env.bean.EnumList.AppRightState;
 import com.env.bean.RequestResult;
 import com.env.easypatrol.R;
@@ -1287,7 +1288,12 @@ public class DataService extends Service {
 
 				//ResultType,DataID
 				uploadObject.setPostDataDateTime(standardDateTime);
-				uploadObject.setUserID(SystemParamsUtil.getInstance().getLoginUser(sp).getUserID());
+				EP_User user = SystemParamsUtil.getInstance().getLoginUser(sp);
+				if(user==null){
+					uploadObject.setUserID("");
+				}else{
+					uploadObject.setUserID(user.getUserID());
+				}
 
 				for (HashMap<String,String> task : tasks){
 					HashMap<String,Object> tmp = new HashMap<String,Object>();

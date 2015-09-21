@@ -4,14 +4,19 @@ import java.io.File;
 
 import android.app.AlarmManager;
 import android.app.Application;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.env.easypatrol.R;
 import com.env.utils.DataBaseUtil;
 import com.env.utils.HttpUtil;
 import com.env.utils.SystemMethodUtil;
+
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
 
 public class PatrolApplication extends Application{
 	private Intent startService,keepDataService;
@@ -73,8 +78,12 @@ public class PatrolApplication extends Application{
 		context = getApplicationContext();
 		
 		CrashHandler crashHandler = CrashHandler.getInstance();  
-		crashHandler.init(context); 
-        
+		crashHandler.init(context);
+
+		JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+		JPushInterface.init(context);
+		initialNotification();
+
 //		if(!SystemMethodUtil.hasShortcut(context)){
 //			SystemMethodUtil.addShortcut(context);
 //		}
@@ -117,6 +126,14 @@ public class PatrolApplication extends Application{
 		keepDataService.setAction("com.env.component.TaskService");
 		context.startService(keepDataService);
 		
+	}
+
+	private void initialNotification(){
+		BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(getApplicationContext());
+		builder.statusBarDrawable = R.drawable.notification_stay_big;
+		builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为自动消失
+		builder.notificationDefaults = Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE|Notification.DEFAULT_LIGHTS;  // 设置为铃声与震动都要
+		JPushInterface.setPushNotificationBuilder(1, builder);
 	}
 	
 }
