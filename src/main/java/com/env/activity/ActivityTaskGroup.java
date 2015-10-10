@@ -164,7 +164,7 @@ public class ActivityTaskGroup extends NfcActivity {
                     intent.putExtra("task", map);
                     switch (resultType) {
                         case 0:
-                            intent.setClass(ActivityTaskGroup.this, ActivitySingleTask.class);
+                            intent.setClass(ActivityTaskGroup.this, ActivityNumberTask.class);
                             break;
                         case 2:
                             intent.setClass(ActivityTaskGroup.this, ActivityMultiTask.class);

@@ -78,7 +78,7 @@ public class ActivityNumberTask extends NfcActivity{
 		gridView = (MyGridView)findViewById(R.id.grid);
 
 		editText.setText(task.get("Text"));
-		valueEditText.setTag(task.get("Value"));
+		valueEditText.setText(task.get("Value"));
 		TextView text = (TextView)findViewById(R.id.text_head);
 		if(isMustUseText) text.setText(text.getText()+"(必须填写)");
 		TextView  pic = (TextView)findViewById(R.id.pic_head);
@@ -193,38 +193,46 @@ public class ActivityNumberTask extends NfcActivity{
 			long dataId = LocalDataHelper.updateEpResult(db, resultValues, task);
 			if(dataId<1){
 				Toast.makeText(ActivityNumberTask.this, "保存失败,请重试", Toast.LENGTH_SHORT).show();
-				return 0;
+				return -1;
 			}
 			task.put("DataID", String.valueOf(dataId));
 		}else {
-			LocalDataHelper.updateEpResult(db, resultValues, task);
+			long dataId = LocalDataHelper.updateEpResult(db, resultValues, task);
+			if(dataId <1){
+				Toast.makeText(ActivityNumberTask.this, "保存失败,请重试", Toast.LENGTH_SHORT).show();
+				return -1;
+			}
 		}
 		db.delete("EP_PatrolResult_Number","DataID = ? ",new String[]{task.get("DataID")});
 		ContentValues numberValues = new ContentValues();
 		numberValues.put("DataID",task.get("DataID"));
 		numberValues.put("DValue",valueEditText.getText().toString());
 		numberValues.put("OPDateTime",dateTimeNow);
-		numberValues.put("Unit",task.get("UnitID"));
+		numberValues.put("UnitID",task.get("UnitID"));
 		db.insert("EP_PatrolResult_Number",null,numberValues);
 		ContentValues taskValues = new ContentValues();
 		taskValues.put("IsDone", "1");
 		taskValues.put("DoneUserID", SystemParamsUtil.getInstance().getLoginUser(getSharedPreferences(PatrolApplication.PREFS_NAME, MODE_PRIVATE)).getUserID());
 		taskValues.put("SampleTime", dateTimeNow);
 		taskValues.put("HasRemind", "1");
-		LocalDataHelper.updateEpTask(db, taskValues, task.get("TaskID"));
-
-		db.delete("EP_PatrolResult_Media","TaskID=?",new String[]{task.get("TaskID")});
-		for (HashMap<String,String> pic : media){
-			if(pic.get("TaskID")!=null && pic.get("TaskID").length() >0){
-				ContentValues tmp = new ContentValues();
-				tmp.put("TaskID",pic.get("TaskID"));
-				tmp.put("FilePath",pic.get("FilePath"));
-				tmp.put("IsUpload",0);
-				db.insert("EP_PatrolResult_Media",null,tmp);
+		long index = LocalDataHelper.updateEpTask(db, taskValues, task.get("TaskID"));
+		if(index>0){
+			db.delete("EP_PatrolResult_Media", "TaskID=?", new String[]{task.get("TaskID")});
+			for (HashMap<String,String> pic : media){
+				if(pic.get("TaskID")!=null && pic.get("TaskID").length() >0){
+					ContentValues tmp = new ContentValues();
+					tmp.put("TaskID",pic.get("TaskID"));
+					tmp.put("FilePath",pic.get("FilePath"));
+					tmp.put("IsUpload",0);
+					db.insert("EP_PatrolResult_Media",null,tmp);
+				}
 			}
+			Toast.makeText(ActivityNumberTask.this, "保存成功", Toast.LENGTH_SHORT).show();
+			return -1;
+		}else{
+			Toast.makeText(ActivityNumberTask.this, "保存失败", Toast.LENGTH_SHORT).show();
+			return -1;
 		}
-		Toast.makeText(ActivityNumberTask.this, "保存成功", Toast.LENGTH_SHORT).show();
-		return 1;
 	}
 
 	@Override

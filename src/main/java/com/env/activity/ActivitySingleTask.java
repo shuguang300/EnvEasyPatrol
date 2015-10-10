@@ -339,11 +339,15 @@ public class ActivitySingleTask extends NfcActivity{
 			long dataId = LocalDataHelper.updateEpResult(db, resultValues, task);
 			if(dataId<1){
 				Toast.makeText(ActivitySingleTask.this, "保存失败,请重试", Toast.LENGTH_SHORT).show();
-				return 0;
+				return -1;
 			}
 			task.put("DataID", String.valueOf(dataId));
 		}else {
-			LocalDataHelper.updateEpResult(db, resultValues, task);
+			long dataId = LocalDataHelper.updateEpResult(db, resultValues, task);
+			if(dataId<1){
+				Toast.makeText(ActivitySingleTask.this, "保存失败,请重试", Toast.LENGTH_SHORT).show();
+				return -1;
+			}
 		}
 
 		contentSelected = new ArrayList<Integer>();
@@ -372,20 +376,24 @@ public class ActivitySingleTask extends NfcActivity{
 		taskValues.put("DoneUserID", SystemParamsUtil.getInstance().getLoginUser(getSharedPreferences(PatrolApplication.PREFS_NAME, MODE_PRIVATE)).getUserID());
 		taskValues.put("SampleTime", dateTimeNow);
 		taskValues.put("HasRemind", "1");
-		LocalDataHelper.updateEpTask(db, taskValues, task.get("TaskID"));
-
-		db.delete("EP_PatrolResult_Media","TaskID=?",new String[]{task.get("TaskID")});
-		for (HashMap<String,String> pic : media){
-			if(pic.get("TaskID")!=null && pic.get("TaskID").length() >0){
-				ContentValues tmp = new ContentValues();
-				tmp.put("TaskID",pic.get("TaskID"));
-				tmp.put("FilePath",pic.get("FilePath"));
-				tmp.put("IsUpload",0);
-				db.insert("EP_PatrolResult_Media",null,tmp);
+		long index = LocalDataHelper.updateEpTask(db, taskValues, task.get("TaskID"));
+		if(index>0){
+			db.delete("EP_PatrolResult_Media","TaskID=?",new String[]{task.get("TaskID")});
+			for (HashMap<String,String> pic : media){
+				if(pic.get("TaskID")!=null && pic.get("TaskID").length() >0){
+					ContentValues tmp = new ContentValues();
+					tmp.put("TaskID",pic.get("TaskID"));
+					tmp.put("FilePath",pic.get("FilePath"));
+					tmp.put("IsUpload",0);
+					db.insert("EP_PatrolResult_Media",null,tmp);
+				}
 			}
+			Toast.makeText(ActivitySingleTask.this, "保存成功", Toast.LENGTH_SHORT).show();
+			return 1;
+		}else{
+			Toast.makeText(ActivitySingleTask.this, "保存失败", Toast.LENGTH_SHORT).show();
+			return -1;
 		}
-		Toast.makeText(ActivitySingleTask.this, "保存成功", Toast.LENGTH_SHORT).show();
-		return 1;
 	}
 
 	private HashMap<String, String> receiveTask(){
