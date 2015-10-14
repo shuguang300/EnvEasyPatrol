@@ -8,7 +8,7 @@
 build/
 /EnvEasyPatrol.iml
 /src/androidTest/
-
+/src/main/gen
 
 # Files for the Dalvik VM
 

@@ -639,7 +639,8 @@ public class ActivityTaskGroup extends NfcActivity implements View.OnClickListen
     private void mBindService() {
         if (binder == null) {
             service = new Intent();
-            service.setAction("com.env.component.DataService");
+            service.setClass(ActivityTaskGroup.this,DataService.class);
+//            service.setAction("com.env.component.DataService");
             bindService(service, conn, Context.BIND_AUTO_CREATE);
         }
 
