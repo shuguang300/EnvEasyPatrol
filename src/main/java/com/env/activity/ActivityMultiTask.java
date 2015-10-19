@@ -285,7 +285,7 @@ public class ActivityMultiTask extends NfcActivity  {
 				}
 			}
 			Toast.makeText(ActivityMultiTask.this, "保存成功", Toast.LENGTH_SHORT).show();
-			return -1;
+			return 1;
 		}else{
 			Toast.makeText(ActivityMultiTask.this, "保存失败", Toast.LENGTH_SHORT).show();
 			return -1;

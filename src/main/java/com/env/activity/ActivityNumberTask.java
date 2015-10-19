@@ -228,7 +228,7 @@ public class ActivityNumberTask extends NfcActivity{
 				}
 			}
 			Toast.makeText(ActivityNumberTask.this, "保存成功", Toast.LENGTH_SHORT).show();
-			return -1;
+			return 1;
 		}else{
 			Toast.makeText(ActivityNumberTask.this, "保存失败", Toast.LENGTH_SHORT).show();
 			return -1;

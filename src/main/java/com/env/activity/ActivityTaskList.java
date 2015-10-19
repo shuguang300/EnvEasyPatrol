@@ -289,7 +289,7 @@ public class ActivityTaskList extends NfcActivity{
 				if (tasks.get(i).get("IsDone").equals("1")) {
 					tasks.get(i).put("SampleTime", tasks.get(i).get("OPDateTime"));
 					tasks.get(i).put("IsEnable", "0");
-					String [] valueAndStep = LocalDataHelper.getTaskValuesAndSteps(db, tasks.get(i).get("ResultType") == "0" ? "EP_PatrolResult_Number" : "EP_PatrolResult_String", Integer.valueOf(tasks.get(i).get("TaskID")));
+					String [] valueAndStep = LocalDataHelper.getTaskValuesAndSteps(db, tasks.get(i).get("ResultType").equals("0") ? "EP_PatrolResult_Number" : "EP_PatrolResult_String", Integer.valueOf(tasks.get(i).get("TaskID")));
 					tasks.get(i).put("Value", valueAndStep[0]);
 					tasks.get(i).put("Step", valueAndStep[1]);
 				} else {

@@ -397,7 +397,7 @@ public class ActivityTaskGroup extends NfcActivity {
                     if (tmpTask.get("IsDone").equals("1")) {
                         tmpTask.put("SampleTime",tmpTask.get("OPDateTime"));
                         tmpTask.put("IsEnable", "0");
-                        String [] valueAndStep = LocalDataHelper.getTaskValuesAndSteps(db, tmpTask.get("ResultType") == "0" ? "EP_PatrolResult_Number" : "EP_PatrolResult_String", Integer.valueOf(tmpTask.get("TaskID")));
+                        String [] valueAndStep = LocalDataHelper.getTaskValuesAndSteps(db, tmpTask.get("ResultType").equals("0") ? "EP_PatrolResult_Number" : "EP_PatrolResult_String", Integer.valueOf(tmpTask.get("TaskID")));
                         tmpTask.put("Value", valueAndStep[0]);
                         tmpTask.put("Step", valueAndStep[1]);
                     } else {
@@ -641,7 +641,8 @@ public class ActivityTaskGroup extends NfcActivity {
     private void mBindService() {
         if (binder == null) {
             service = new Intent();
-            service.setAction("com.env.component.DataService");
+            service.setClass(ActivityTaskGroup.this,DataService.class);
+//            service.setAction("com.env.component.DataService");
             bindService(service, conn, Context.BIND_AUTO_CREATE);
         }
 
