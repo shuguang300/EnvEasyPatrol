@@ -33,7 +33,7 @@ public class PatrolApplication extends Application{
 	public static final String NFCSTATUNOTE = "Nfc_Statu_Note";
 	public static final String APN_PREFER = "Apn_Prefer";
 	
-	public static final String IP = "183.81.180.26:9999/secondwatersupply";
+	public static final String IP = "120.26.219.239/secondwatersupply";
 	
 	public static final String PREFS_NAME = "EnvPrefsFile";
 	public static final String MAC_ADDR = "macaddr";
@@ -99,11 +99,12 @@ public class PatrolApplication extends Application{
 			Thread.sleep(1000);
 			startService = new Intent();
 			startService.setAction("com.env.component.DataService");
+			startService.setPackage(getPackageName());
 			context.startService(startService);
 
 			keepDataService = new Intent();
 			keepDataService.setAction("com.env.component.TaskService");
-
+			keepDataService.setPackage(getPackageName());
 			alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 			pendingIntent = PendingIntent.getService(context, 0, keepDataService, 0);
 			alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, 0, 5*60*1000, pendingIntent);
@@ -121,9 +122,11 @@ public class PatrolApplication extends Application{
 		context = getApplicationContext();
 		startService = new Intent();
 		startService.setAction("com.env.component.DataService");
+		startService.setPackage(getPackageName());
 		context.startService(startService);
 		keepDataService = new Intent();
 		keepDataService.setAction("com.env.component.TaskService");
+		keepDataService.setPackage(getPackageName());
 		context.startService(keepDataService);
 		
 	}

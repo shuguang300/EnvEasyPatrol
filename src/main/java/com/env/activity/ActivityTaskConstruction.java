@@ -1,6 +1,4 @@
 package com.env.activity;
-
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,12 +22,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -37,18 +33,13 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.env.bean.EP_NFCCard;
 import com.env.bean.EP_User;
 import com.env.component.DataService;
 import com.env.component.PatrolApplication;
-import com.env.component.StartUpBroadCast;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
 import com.env.nfc.NfcUtils;
@@ -60,9 +51,7 @@ import com.env.utils.NotificationUtil;
 import com.env.utils.SystemMethodUtil;
 import com.env.utils.SystemParamsUtil;
 import com.env.utils.ViewUtil;
-import com.env.widget.MenuPopupWindow;
 import com.zxing.activity.CaptureActivity;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -680,7 +669,9 @@ public class ActivityTaskConstruction extends NfcActivity{
 	 */
 	private void mBindService(){
 		if(binder==null){
-			dataService = new Intent(ActivityTaskConstruction.this,DataService.class);
+			dataService = new Intent();
+			dataService.setAction("com.env.component.TaskService");
+			dataService.setPackage("com.env.easypatrol");
 			bindService(dataService, connection, Service.BIND_AUTO_CREATE);
 		}
 	}

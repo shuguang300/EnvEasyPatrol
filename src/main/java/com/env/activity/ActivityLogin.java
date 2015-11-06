@@ -69,7 +69,9 @@ public class ActivityLogin extends NfcActivity {
 		}
 	};
 	private void mBindService(){
-		dataService = new Intent(ActivityLogin.this,DataService.class);
+		dataService = new Intent();
+		dataService.setAction("com.env.component.TaskService");
+		dataService.setPackage(getPackageName());
 		bindService(dataService, connection, Service.BIND_AUTO_CREATE);
 	}
 	

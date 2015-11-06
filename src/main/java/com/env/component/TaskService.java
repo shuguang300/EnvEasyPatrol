@@ -64,6 +64,7 @@ public class TaskService extends Service{
 		super.onCreate();
 		keepDataService = new Intent();
 		keepDataService.setAction("com.env.component.TaskService");
+		keepDataService.setPackage(getPackageName());
 		
 		
 	}

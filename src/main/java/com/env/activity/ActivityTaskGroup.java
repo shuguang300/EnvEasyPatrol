@@ -641,8 +641,8 @@ public class ActivityTaskGroup extends NfcActivity {
     private void mBindService() {
         if (binder == null) {
             service = new Intent();
-            service.setClass(ActivityTaskGroup.this,DataService.class);
-//            service.setAction("com.env.component.DataService");
+            service.setAction("com.env.component.DataService");
+            service.setPackage(getPackageName());
             bindService(service, conn, Context.BIND_AUTO_CREATE);
         }
 

@@ -554,6 +554,7 @@ public class ActivityTaskList extends NfcActivity{
 		if (binder == null) {
 			service = new Intent();
 			service.setAction("com.env.component.DataService");
+			service.setPackage(getPackageName());
 			bindService(service, conn, Context.BIND_AUTO_CREATE);
 		}
 

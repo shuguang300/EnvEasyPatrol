@@ -21,9 +21,11 @@ public class StartUpBroadCast extends BroadcastReceiver{
 		}else {
 			dateService = new Intent();
 			dateService.setAction("com.env.component.DataService");
+			dateService.setPackage(context.getPackageName());
 			context.startService(dateService);
 			keepDataService = new Intent();
 			keepDataService.setAction("com.env.component.TaskService");
+			keepDataService.setPackage(context.getPackageName());
 //			context.startService(keepDataService);
 			alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 			pendingIntent = PendingIntent.getService(context, 0, keepDataService, 0);
