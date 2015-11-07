@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.env.bean.EP_User;
 import com.env.component.DataService;
 import com.env.component.PatrolApplication;
+import com.env.component.TaskService;
 import com.env.easypatrol.R;
 import com.env.nfc.NfcActivity;
 import com.env.utils.DataBaseUtil;
@@ -58,7 +59,6 @@ public class ActivityLogin extends NfcActivity {
 	private SharedPreferences settings;
 	private SharedPreferences.Editor editor;
 	private ServiceConnection connection = new ServiceConnection() {
-		
 		@Override
 		public void onServiceDisconnected(ComponentName name) {	
 			mBindService();
@@ -70,7 +70,7 @@ public class ActivityLogin extends NfcActivity {
 	};
 	private void mBindService(){
 		dataService = new Intent();
-		dataService.setAction("com.env.component.TaskService");
+		dataService.setAction("com.env.component.DataService");
 		dataService.setPackage(getPackageName());
 		bindService(dataService, connection, Service.BIND_AUTO_CREATE);
 	}

@@ -1459,7 +1459,7 @@ public class DataService extends Service {
 	public void startTaskService() {
 		Intent intent = new Intent();
 		intent.setAction("com.env.component.TaskService");
-		intent.setPackage(getPackageName());
+		intent.setPackage("com.env.easypatrol");
 		startService(intent);
 	}
 

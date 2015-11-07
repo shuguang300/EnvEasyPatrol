@@ -670,8 +670,8 @@ public class ActivityTaskConstruction extends NfcActivity{
 	private void mBindService(){
 		if(binder==null){
 			dataService = new Intent();
-			dataService.setAction("com.env.component.TaskService");
-			dataService.setPackage("com.env.easypatrol");
+			dataService.setAction("com.env.component.DataService");
+			dataService.setPackage(getPackageName());
 			bindService(dataService, connection, Service.BIND_AUTO_CREATE);
 		}
 	}

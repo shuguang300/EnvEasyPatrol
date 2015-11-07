@@ -69,7 +69,7 @@ public class ActivityConfig extends NfcActivity implements OnClickListener{
 	private void mBindService(){
 		if(binder==null){
 			dataService = new Intent();
-			dataService.setAction("com.env.component.TaskService");
+			dataService.setAction("com.env.component.DataService");
 			dataService.setPackage(getPackageName());
 			bindService(dataService, connection, Service.BIND_AUTO_CREATE);
 		}
