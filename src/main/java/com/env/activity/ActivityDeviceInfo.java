@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -113,15 +114,18 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
         webView.addJavascriptInterface(this, "deviceInfo");
     }
 
+    @JavascriptInterface
     public String getDeviceId(){
         return deviceId;
     }
 
+    @JavascriptInterface
     public String getUrlPath(){
         String url = HttpUtil.URL_Datacenter+"GetDeviceInfoByDeviceId";
         return url;
     }
 
+    @JavascriptInterface
     public void showWebInfo(String content){
         Toast.makeText(this,content,Toast.LENGTH_SHORT).show();
     }

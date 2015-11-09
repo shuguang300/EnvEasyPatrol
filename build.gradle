@@ -9,8 +9,8 @@ android {
         applicationId 'com.env.easypatrol'
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 18
-        versionName '2.0.6'
+        versionCode 19
+        versionName '2.0.7'
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
