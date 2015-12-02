@@ -51,6 +51,8 @@ import com.env.utils.NotificationUtil;
 import com.env.utils.SystemMethodUtil;
 import com.env.utils.SystemParamsUtil;
 import com.env.utils.ViewUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zxing.activity.CaptureActivity;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -398,12 +400,17 @@ public class ActivityTaskConstruction extends NfcActivity{
 			Bundle bundle = data.getExtras();
 			String scanResult = bundle.getString("result");
 			try {
-				Integer.parseInt(scanResult);
-				Intent intent = new Intent(ActivityTaskConstruction.this,ActivityDeviceInfo.class);
-				intent.putExtra("deviceId",scanResult);
-				startActivity(intent);
+				Gson gson = new Gson();
+				HashMap<String,String> hash = gson.fromJson(scanResult,new TypeToken<HashMap<String,String>>(){}.getType());
+				if(hash.get("Type")!=null || hash.get("Type").toString().length()>0){
+					Intent intent = new Intent(ActivityTaskConstruction.this,ActivityDeviceInfo.class);
+					intent.putExtra("data", hash);
+					startActivity(intent);
+				}else{
+					Toast.makeText(ActivityTaskConstruction.this,"未能识别的二维码",Toast.LENGTH_SHORT).show();
+				}
 			} catch (Exception ex){
-				Toast.makeText(ActivityTaskConstruction.this,"未能识别的设备",Toast.LENGTH_SHORT).show();
+				Toast.makeText(ActivityTaskConstruction.this,"未能识别的二维码",Toast.LENGTH_SHORT).show();
 			}
 
 		}

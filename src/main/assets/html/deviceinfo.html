@@ -1,116 +1,134 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
-		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<script src="scripts/jquery-2.1.4.min.js"></script>
-		<script src="scripts/angular.min.js"></script>
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<script>
-			var deviceId = window.deviceInfo.getDeviceId();
-			var urlPath = window.deviceInfo.getUrlPath();
-			var deviceInfo;
-			$(function() {
-				getDeviceInfo();
-			});
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="scripts/jquery-2.1.4.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        var deviceId = window.deviceInfo.getDataId();
+        var type = window.deviceInfo.getDataType();
+        var urlPath = window.deviceInfo.getUrlPath();
+        var deviceInfo;
+        $(function () {
+            getDeviceInfo();
+        });
 
-			function getDeviceInfo() {
-				var param = {
-					"deviceId": deviceId
-				};
-				$.ajax({
-					url: urlPath,
-					type: "post",
-					data: param,
-					async: true,
-					cache: false,
-					dataType: "jsonp",
-					jsonp: "callback",
-					jsonpCallback: "EnvEasyPatrol",
-					success: function(info) {
-						try {
-							var count = info.length;
-							if (count > 0) deviceInfo = info[0];
-							else deviceInfo = null;
-						} catch (e) {}
-						initialDeviceView();
-					},
-					error: function(info) {
-						alert(info);
-					},
-					complete: function() {}
-				});
-			}
+        function test(){
+            alert("aaaaa");
+        }
 
-			function initialDeviceView() {
-				if (deviceInfo != null) {
-					$("#DeviceName").html(deviceInfo.DeviceName);
-					$("#DeviceSN").html(deviceInfo.DeviceSN);
-					$("#PlantName").html(deviceInfo.PlantName);
-					$("#SampleTime").html(deviceInfo.SampleTime.replace("T", " "));
-				} else {
-					window.deviceInfo.showWebInfo("没有该设备的信息");
-				}
-			}
-		</script>
-		<style>
-			。panel-heading {
-				font-weight: bold;
-			}
-			.value{
-				float: right;
-			}
-		</style>
-		<title>设备信息</title>
-	</head>
+        function getDeviceInfo() {
+            var param = {
+                "deviceId": deviceId,
+                "dataType": type
+            };
+            $.ajax({
+                url: urlPath,
+                type: "post",
+                data: param,
+                async: true,
+                cache: false,
+                dataType: "jsonp",
+                jsonp: "callback",
+                jsonpCallback: "EnvEasyPatrol",
+                success: function (info) {
+                    try {
+                        var count = info.length;
+                        if (count > 0) {
+                            deviceInfo = info[0];
+                            initialDeviceView();
+                        } else {
+                            deviceInfo = null;
+                            window.deviceInfo.showWebInfo("没有该设备的信息");
+                        }
+                    } catch (e) {
+                        window.deviceInfo.showWebInfo("没有该设备的信息");
+                    }
+                },
+                error: function (info) {
+                    window.deviceInfo.showWebInfo("网络连接错误");
+                },
+                complete: function () {
+                }
+            });
+        }
 
-	<body class="container">
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="panel panel-primary" style="margin-top:10px">
-					<div class="panel-heading">设备信息</div>
-					<div class="panel-body" id="DeviceName">
-						<ul class="list-group">
-							<li class="list-group-item">设备名称<span class="value" id="DeviceName"></span></li>
-							<li class="list-group-item">设备编号<span class="value" id="DeviceSN"></span></li>
-							<li class="list-group-item">设备型号<span class="value" id="DeviceType"></span></li>
-							<li class="list-group-item">生产厂家<span class="value" id="DeviceCompany"></span></li>
-							<li class="list-group-item">投入使用日期<span class="value" id="SampleTime"></span></li>
-						</ul>
+        function initialDeviceView() {
+            if (deviceInfo != null) {
+                if (type == "0") {
+                    $("#plantinfo").css("display", "inherit");
+                    $("#PlantName").html(deviceInfo.PlantName);
+                    $("#ReMark").html(deviceInfo.ReMark);
+                    $("#ContactPerson").html(deviceInfo.ContactPerson);
+                    $("#FatherPlantName").html(deviceInfo.FatherPlantName);
+                    $("#ContactPhoneNum").html(deviceInfo.ContactPhoneNum);
+                } else if (type == "1") {
+                    $("#deviceinfo").css("display", "inherit");
+                    $("#DeviceName").html(deviceInfo.DeviceName);
+                    $("#DeviceSN").html(deviceInfo.DeviceSN);
+                    $("#SpecificationName").html(deviceInfo.SpecificationName);
+                    $("#ManufactureName").html(deviceInfo.ManufactureName);
+                    $("#StartUseTime").html(deviceInfo.StartUseTime.replace("T", " "));
+                } else {
+                    window.deviceInfo.showWebInfo("没有二维码的信息");
+                }
+            } else {
+                window.deviceInfo.showWebInfo("没有该设备的信息");
+            }
+        }
+    </script>
+    <style>
+        .panel-heading {
+            font-weight: bold;
+        }
 
-					</div>
-				</div>
-				<div class="panel panel-primary" style="margin-top:10px;display: none;">
-					<div class="panel-heading">泵房信息</div>
-					<div class="panel-body" id="DeviceName">
-						<ul class="list-group">
-							<li class="list-group-item">名称<span class="value"></span></li>
-							<li class="list-group-item">编号<span class="value"></span></li>
-							<li class="list-group-item">地址<span class="value"></span></li>
-							<li class="list-group-item">竣工日期<span class="value"></span></li>
-							<li class="list-group-item">开发商<span class="value"></span></li>
-							<li class="list-group-item">物业名称<span class="value"></span></li>
-							<li class="list-group-item">运维公司<span class="value"></span></li>
-							<li class="list-group-item">服务电话<span class="value"></span></li>
-						</ul>
-					</div>
-				</div>
-				<!--<div class="panel panel-primary">
-					<div class="panel-heading">设备编号</div>
-					<div class="panel-body" id="DeviceSN"></div>
-				</div>
-				<div class="panel panel-primary">
-					<div class="panel-heading">所属泵房</div>
-					<div class="panel-body" id="PlantName"></div>
-				</div>
-				<div class="panel panel-primary">
-					<div class="panel-heading">最近巡检时间</div>
-					<div class="panel-body" id="SampleTime"></div>
-				</div>-->
-			</div>
-		</div>
-	</body>
+        .value {
+            text-align: right;
+            float: right;
+            word-wrap: break-word;
+        }
+    </style>
+    <title>设备信息</title>
+</head>
+
+<body class="container">
+<div class="row">
+    <div class="col-xs-12">
+        <div id="deviceinfo" class="panel panel-primary" style="margin-top:10px;display: none;">
+            <div class="panel-heading">设备信息</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">名称<span class="value" id="DeviceName"></span></li>
+                    <li class="list-group-item">编号<span class="value" id="DeviceSN"></span></li>
+                    <li class="list-group-item">型号<span class="value" id="SpecificationName"></span></li>
+                    <li class="list-group-item">生产厂家<span class="value" id="ManufactureName"></span></li>
+                    <li class="list-group-item">投入使用日期<span class="value" id="StartUseTime"></span></li>
+                </ul>
+
+            </div>
+        </div>
+        <div id="plantinfo" class="panel panel-primary" style="margin-top:10px;display: none;">
+            <div class="panel-heading">泵房信息</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">名称<span class="value" id="PlantName"></span></li>
+                    <li class="list-group-item">负责人<span class="value" id="ContactPerson"></span></li>
+                    <li class="list-group-item">编号<span class="value"></span></li>
+                    <li class="list-group-item">地址<span class="value" id="ReMark"></span></li>
+                    <li class="list-group-item">竣工日期<span class="value"></span></li>
+                    <li class="list-group-item">开发商<span class="value"></span></li>
+                    <li class="list-group-item">物业名称<span class="value"></span></li>
+                    <li class="list-group-item">运维公司<span class="value" id="FatherPlantName"></span></li>
+                    <li class="list-group-item">服务电话<span class="value" id="ContactPhoneNum"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 
 </html>

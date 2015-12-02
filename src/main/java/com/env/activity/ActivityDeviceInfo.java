@@ -1,9 +1,12 @@
 package com.env.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -25,17 +28,18 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Administrator on 2015/7/17.
  */
-public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListener{
+public class ActivityDeviceInfo extends NfcActivity{
 
-    private String deviceId;
-    private TextView back,title,refresh;
+    private HashMap<String,String> hash;
     private WebView webView;
     private ProgressBar progressBar;
-    private DeviceInfo deviceInfo;
+    private String type,value;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +53,25 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
     public void iniData() {
         super.iniData();
         Intent intent = getIntent();
-        deviceId = intent.getStringExtra("deviceId");
+        hash = (HashMap<String,String>)intent.getSerializableExtra("data");
+        type = hash.get("Type").toString();
+        value = hash.get("Id").toString();
+    }
+
+    private void initialActionBar(){
+        actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (type=="1")actionBar.setTitle("设备信息");
+        else if (type=="0") actionBar.setTitle("泵房信息");
+        actionBar.show();
     }
 
     @Override
     public void iniView() {
         super.iniView();
-        back = (TextView)findViewById(R.id.back);
-        title = (TextView)findViewById(R.id.title);
-        refresh = (TextView)findViewById(R.id.refresh);
+        initialActionBar();
         progressBar = (ProgressBar)findViewById(R.id.progress);
         webView = (WebView)findViewById(R.id.webview);
-
-
-        back.setOnClickListener(this);
-        refresh.setOnClickListener(this);
-
         initialWebView();
 
     }
@@ -114,38 +121,47 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
         webView.addJavascriptInterface(this, "deviceInfo");
     }
 
+
+
     @JavascriptInterface
-    public String getDeviceId(){
-        return deviceId;
+    public String getDataId(){
+        return value;
     }
 
+    @JavascriptInterface
+    public String getDataType(){
+        return type;
+    }
     @JavascriptInterface
     public String getUrlPath(){
         String url = HttpUtil.URL_Datacenter+"GetDeviceInfoByDeviceId";
         return url;
     }
-
     @JavascriptInterface
     public void showWebInfo(String content){
-        Toast.makeText(this,content,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.back:
-                onBackPressed();
-                break;
-            case R.id.refresh:
-                webView.reload();
-                break;
-        }
+        Toast.makeText(ActivityDeviceInfo.this,content,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "刷新");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        } else if (id == 0) {
+            webView.loadUrl("javascript:getDeviceInfo()");
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private class GetDeviceInfoByDeviceId extends AsyncTask<Integer,Integer,RequestResult>{
@@ -173,16 +189,12 @@ public class ActivityDeviceInfo extends NfcActivity implements View.OnClickListe
                     TypeToken typeToken = new TypeToken<ArrayList<DeviceInfo>>(){};
                     ArrayList<DeviceInfo> deviceInfos = gson.fromJson(msg,typeToken.getType());
                     if(deviceInfos.size()>0){
-                        deviceInfo = deviceInfos.get(0);
                     }
                 }catch (Exception ex){
-                    deviceInfo = null;
                 }
             }else {
-                deviceInfo = null;
                 Toast.makeText(ActivityDeviceInfo.this,"获取设备信息失败",Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
